@@ -295,3 +295,18 @@ footer p { max-width: 500px; margin: 0; text-align: right; line-height: 1.5; }
   footer { display: block; }
   footer p { text-align: left; margin-top: 14px; }
 }
+
+/* Instalación PWA */
+.install-nav-button { background: #0b3b66 !important; color: #fff !important; }
+.install-banner { width: min(1180px, calc(100% - 32px)); margin: -24px auto 54px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 18px 20px; border: 1px solid #b8d7c9; border-radius: 18px; background: #eff9f4; box-shadow: 0 10px 30px rgba(25, 74, 57, 0.08); }
+.install-banner-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: #19744f; color: white; }
+.install-banner strong { display: block; color: #154e39; font-size: 17px; }
+.install-banner p { margin: 4px 0 0; color: #4e6f62; line-height: 1.45; }
+.install-banner small { color: #4e6f62; font-weight: 750; text-align: right; }
+.install-button { white-space: nowrap; }
+.installed-badge { display: inline-flex; align-items: center; gap: 7px; color: #19744f; font-weight: 850; white-space: nowrap; }
+
+@media (max-width: 720px) {
+  .install-banner { width: min(100% - 22px, 1180px); margin-top: -28px; grid-template-columns: auto 1fr; padding: 16px; }
+  .install-banner .install-button, .install-banner > small, .installed-badge { grid-column: 1 / 3; width: 100%; justify-content: center; text-align: center; }
+}

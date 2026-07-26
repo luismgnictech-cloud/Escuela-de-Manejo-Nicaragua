@@ -1,66 +1,55 @@
 # Escuela de Manejo Nicaragua
 
-Aplicación web de estudio para practicar el examen teórico de conducción en Nicaragua.
+Plataforma de práctica para el examen teórico de conducción en Nicaragua. Incluye preguntas por módulo, simulacros, revisión de errores y progreso guardado en el dispositivo.
 
-## Funciones incluidas
+## Versión 2: aplicación instalable
 
-- 314 preguntas organizadas en cinco módulos.
-- Práctica con corrección inmediata.
-- Simulador de examen con temporizador.
-- Preguntas visuales de señales de tránsito.
-- Historial de respuestas, rendimiento por módulo y repaso de errores.
-- Diseño adaptable a teléfonos, tabletas y computadoras.
-- Publicación automática mediante GitHub Pages.
+Esta versión funciona como **Progressive Web App (PWA)**:
 
-## Módulos
+- Instalación desde Chrome en Android.
+- Icono propio en la pantalla de inicio y el menú de aplicaciones.
+- Apertura en modo independiente, sin la barra normal del navegador.
+- Preguntas e imágenes disponibles sin conexión después de la primera carga completa.
+- Actualización automática al publicar una nueva versión en GitHub Pages.
+- Progreso guardado localmente en el dispositivo.
 
-- Motocicletas: 44 preguntas.
-- Mecánica y vehículo liviano: 41 preguntas.
-- Manejo defensivo: 45 preguntas.
-- Ley 431: 124 preguntas.
-- Señales de tránsito: 60 preguntas.
-
-Las preguntas y respuestas fueron transcritas de los documentos proporcionados para el proyecto. La respuesta correcta corresponde a la opción resaltada en amarillo en cada documento fuente.
-
-## Ejecutar localmente
+## Desarrollo local
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Construir
+## Construcción
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Publicar en GitHub Pages
+## Publicación
 
-1. Subí estos archivos a la rama `main`.
-2. Abrí **Settings > Pages** en el repositorio.
-3. En **Build and deployment**, seleccioná **GitHub Actions**.
-4. Cada cambio enviado a `main` ejecutará `.github/workflows/deploy.yml` y publicará la nueva versión.
+El flujo `.github/workflows/deploy.yml` publica automáticamente en GitHub Pages cuando se envían cambios a la rama `main`.
 
-La configuración de Vite usa la ruta base:
-
-```js
-base: '/Escuela-de-Manejo-Nicaragua/'
+```bash
+git add .
+git commit -m "Convertir plataforma en aplicación PWA"
+git push origin main
 ```
 
-Si el repositorio cambia de nombre, esa ruta también debe cambiarse en `vite.config.js`.
-
-## Actualizar preguntas
-
-El banco se encuentra en:
+Sitio publicado:
 
 ```text
-src/data/questions.json
+https://luismgnictech-cloud.github.io/Escuela-de-Manejo-Nicaragua/
 ```
 
-Cada pregunta incluye módulo, número original, opciones, respuesta correcta y referencia al archivo y página de origen.
+## Probar la instalación en Android
 
-## Aviso
+1. Abrir el sitio en Chrome.
+2. Esperar a que cargue completamente.
+3. Pulsar **Instalar aplicación** en la página o abrir el menú `⋮` de Chrome.
+4. Seleccionar **Instalar aplicación** o **Agregar a pantalla principal**.
+5. Abrirla desde el icono creado en Android.
+6. Activar modo avión y comprobar que las preguntas y señales ya visitadas continúan disponibles.
 
-Este sitio es una herramienta educativa. Antes de realizar trámites o exámenes, se debe verificar la normativa vigente y las indicaciones oficiales de la Policía Nacional de Nicaragua.
+> La opción exacta del menú puede variar según la versión de Chrome y Android.

@@ -7,6 +7,7 @@ import {
   ChevronRight,
   CircleAlert,
   Clock3,
+  Download,
   Gauge,
   Home,
   Medal,
@@ -15,6 +16,7 @@ import {
   RotateCcw,
   ShieldCheck,
   Shuffle,
+  Smartphone,
   Target,
   TrafficCone,
   TrendingUp,
@@ -75,6 +77,45 @@ function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
+function useInstallApp() {
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [installed, setInstalled] = useState(() =>
+    window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true,
+  );
+
+  useEffect(() => {
+    const handleBeforeInstall = (event) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
+    };
+    const handleInstalled = () => {
+      setInstalled(true);
+      setDeferredPrompt(null);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    window.addEventListener('appinstalled', handleInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+      window.removeEventListener('appinstalled', handleInstalled);
+    };
+  }, []);
+
+  const install = async () => {
+    if (!deferredPrompt) return false;
+    await deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === 'accepted') setDeferredPrompt(null);
+    return choice.outcome === 'accepted';
+  };
+
+  return {
+    canInstall: Boolean(deferredPrompt) && !installed,
+    installed,
+    install,
+  };
+}
+
 function useStoredProgress() {
   const [progress, setProgress] = useState(() => {
     try {
@@ -100,7 +141,7 @@ function moduleMeta(id) {
   return MODULES.find((module) => module.id === id);
 }
 
-function Header({ view, setView }) {
+function Header({ view, setView, canInstall, onInstall }) {
   const [open, setOpen] = useState(false);
   const nav = [
     ['home', 'Inicio', Home],
@@ -136,13 +177,18 @@ function Header({ view, setView }) {
               <Icon size={17} /> {label}
             </button>
           ))}
+          {canInstall && (
+            <button className="install-nav-button" onClick={onInstall}>
+              <Download size={17} /> Instalar app
+            </button>
+          )}
         </nav>
       </div>
     </header>
   );
 }
 
-function HomeView({ setView, startPractice, progress }) {
+function HomeView({ setView, startPractice, progress, canInstall, installed, onInstall }) {
   const totalQuestions = questions.length;
   const accuracy = progress.totalAnswered
     ? Math.round((progress.totalCorrect / progress.totalAnswered) * 100)
@@ -179,6 +225,27 @@ function HomeView({ setView, startPractice, progress }) {
             <div><strong>{accuracy}%</strong><span>aciertos</span></div>
           </div>
         </div>
+      </section>
+
+      <section className="install-banner" aria-label="Instalación en Android">
+        <span className="install-banner-icon"><Smartphone /></span>
+        <div>
+          <strong>{installed ? 'Aplicación instalada' : 'Llevá la escuela de manejo en tu Android'}</strong>
+          <p>
+            {installed
+              ? 'Podés abrirla desde el menú de aplicaciones y seguir estudiando incluso sin conexión.'
+              : 'Instalala desde Chrome para abrirla como una app y usar el contenido guardado sin conexión.'}
+          </p>
+        </div>
+        {canInstall ? (
+          <button className="button primary install-button" onClick={onInstall}>
+            <Download size={18} /> Instalar aplicación
+          </button>
+        ) : !installed ? (
+          <small>En Chrome: menú ⋮ → Instalar aplicación</small>
+        ) : (
+          <span className="installed-badge"><CheckCircle2 size={17} /> Lista para usar</span>
+        )}
       </section>
 
       <section className="section-block">
@@ -639,6 +706,7 @@ export default function App() {
   const [examSession, setExamSession] = useState(null);
   const [examMinutes, setExamMinutes] = useState(20);
   const [progress, setProgress] = useStoredProgress();
+  const { canInstall, installed, install } = useInstallApp();
 
   const mistakeIds = useMemo(() => Object.keys(progress.mistakes), [progress.mistakes]);
 
@@ -722,7 +790,18 @@ export default function App() {
   };
 
   let content;
-  if (view === 'home') content = <HomeView setView={setView} startPractice={startPractice} progress={progress} />;
+  if (view === 'home') {
+    content = (
+      <HomeView
+        setView={setView}
+        startPractice={startPractice}
+        progress={progress}
+        canInstall={canInstall}
+        installed={installed}
+        onInstall={install}
+      />
+    );
+  }
   if (view === 'practice') content = <PracticeSetup onStart={startPractice} mistakeCount={mistakeIds.length} />;
   if (view === 'practice-session' && practiceSession) {
     content = <PracticeSession session={practiceSession} onExit={() => setView('practice')} recordAnswer={recordAnswer} />;
@@ -737,7 +816,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Header view={view.replace('-session', '')} setView={setView} />
+      <Header view={view.replace('-session', '')} setView={setView} canInstall={canInstall} onInstall={install} />
       <main>{content}</main>
       <footer>
         <div>
