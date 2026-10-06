@@ -24,6 +24,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import questions from './data/questions.json';
+import Roundabouts from './Roundabouts';
 
 const MODULES = [
   {
@@ -71,6 +72,7 @@ const EMPTY_PROGRESS = {
   byModule: {},
   mistakes: {},
   examHistory: [],
+  roundabouts: {},
 };
 
 function shuffle(items) {
@@ -147,6 +149,7 @@ function Header({ view, setView, canInstall, onInstall }) {
     ['home', 'Inicio', Home],
     ['practice', 'Practicar', Play],
     ['exam', 'Simulacro', Target],
+    ['roundabouts', 'Rotondas', RotateCcw],
     ['progress', 'Progreso', TrendingUp],
   ];
 
@@ -248,6 +251,10 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
         )}
       </section>
 
+      <section className="rb-home-banner">
+        <div><span className="eyebrow"><RotateCcw size={16} /> Nuevo · Práctica interactiva</span><h2>Aprendé a circular en rotondas</h2><p>Dos escenarios, tres destinos y tráfico simulado para practicar tus decisiones.</p></div>
+        <button className="button primary" onClick={() => setView('roundabouts')}>Practicar rotondas <ChevronRight size={18}/></button>
+      </section>
       <section className="section-block">
         <div className="section-heading">
           <div>
@@ -695,6 +702,7 @@ function ProgressView({ progress, onReview, onReset }) {
         </div>
       </div>
 
+      <div className="rb-progress-summary"><h2>Práctica en rotondas</h2><p>{Object.keys(progress.roundabouts || {}).length} de 6 desafíos completados.</p><p>{Object.values(progress.roundabouts || {}).filter(r => r.errors === 0).length} completados sin errores en el último intento.</p></div>
       <button className="danger-link" onClick={onReset}>Borrar progreso de este navegador</button>
     </section>
   );
@@ -802,6 +810,7 @@ export default function App() {
       />
     );
   }
+  if (view === 'roundabouts') content = <Roundabouts progress={progress.roundabouts} onComplete={(id, result) => setProgress(current => ({ ...current, roundabouts: { ...current.roundabouts, [id]: result } }))} />;
   if (view === 'practice') content = <PracticeSetup onStart={startPractice} mistakeCount={mistakeIds.length} />;
   if (view === 'practice-session' && practiceSession) {
     content = <PracticeSession session={practiceSession} onExit={() => setView('practice')} recordAnswer={recordAnswer} />;
