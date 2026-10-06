@@ -310,3 +310,11 @@ footer p { max-width: 500px; margin: 0; text-align: right; line-height: 1.5; }
   .install-banner { width: min(100% - 22px, 1180px); margin-top: -28px; grid-template-columns: auto 1fr; padding: 16px; }
   .install-banner .install-button, .install-banner > small, .installed-badge { grid-column: 1 / 3; width: 100%; justify-content: center; text-align: center; }
 }
+
+/* Module-specific mistake review shortcut. */
+.module-card-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.module-card-top { gap: 12px; }
+.module-review-button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: 44px; min-height: 44px; padding: 8px; border: 1px solid #c7d9e7; border-radius: 12px; color: var(--navy); background: #eaf1f6; font-weight: 800; }
+.module-review-button:hover:not(:disabled) { color: white; background: var(--navy); border-color: var(--navy); }
+.module-review-button:disabled { color: var(--muted); background: var(--soft); opacity: .5; }
+.module-review-button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }

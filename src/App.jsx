@@ -268,6 +268,7 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
           {MODULES.map((module) => {
             const Icon = module.icon;
             const count = questions.filter((question) => question.module === module.id).length;
+            const mistakeCount = questions.filter((question) => question.module === module.id && progress.mistakes[question.id]).length;
             const moduleProgress = progress.byModule[module.id] || { answered: 0, correct: 0 };
             const percentage = moduleProgress.answered
               ? Math.round((moduleProgress.correct / moduleProgress.answered) * 100)
@@ -276,7 +277,19 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
               <article className="module-card" key={module.id}>
                 <div className="module-card-top">
                   <span className="module-icon"><Icon /></span>
-                  <span className="question-count">{count} preguntas</span>
+                  <div className="module-card-actions">
+                    <span className="question-count">{count} preguntas</span>
+                    <button
+                      className="module-review-button"
+                      disabled={mistakeCount === 0}
+                      aria-label={`Reforzar preguntas incorrectas de ${module.name}: ${mistakeCount} pendientes`}
+                      title={mistakeCount ? `Reforzar ${mistakeCount} preguntas incorrectas` : 'Sin preguntas incorrectas pendientes'}
+                      onClick={() => startPractice(module.id, true, true)}
+                    >
+                      <RotateCcw size={18} aria-hidden="true" />
+                      <span>{mistakeCount}</span>
+                    </button>
+                  </div>
                 </div>
                 <h3>{module.name}</h3>
                 <span className="module-short">{module.short}</span>
@@ -718,10 +731,10 @@ export default function App() {
 
   const mistakeIds = useMemo(() => Object.keys(progress.mistakes), [progress.mistakes]);
 
-  const startPractice = (module = 'all', random = true) => {
+  const startPractice = (module = 'all', random = true, mistakesOnly = false) => {
     let pool;
-    if (module === 'mistakes') {
-      pool = questions.filter((question) => mistakeIds.includes(question.id));
+    if (module === 'mistakes' || mistakesOnly) {
+      pool = questions.filter((question) => mistakeIds.includes(question.id) && (module === 'mistakes' || question.module === module));
     } else {
       pool = module === 'all' ? questions : questions.filter((question) => question.module === module);
     }
