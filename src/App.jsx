@@ -635,17 +635,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
         </div>
       </article>
 
-      <div className="question-map">
-        {session.map((item, mapIndex) => (
-          <button
-            key={item.id}
-            className={`${mapIndex === index ? 'current ' : ''}${answers[item.id] !== undefined ? 'answered' : ''}`}
-            onClick={() => setIndex(mapIndex)}
-          >
-            {mapIndex + 1}
-          </button>
-        ))}
-      </div>
+
     </section>
   );
 }
