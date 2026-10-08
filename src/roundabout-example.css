@@ -1,0 +1,8 @@
+.roundabout-example { width:min(100%,560px); margin:24px auto; padding:16px; background:#f4f8fb; border:1px solid var(--line); border-radius:16px; }
+.roundabout-example-heading { display:flex; justify-content:space-between; gap:12px; font-size:14px; margin-bottom:12px; color:var(--navy); }
+.roundabout-example-heading span { color:var(--muted); }
+.roundabout-example svg { display:block; width:100%; height:auto; }
+.roundabout-example figcaption { margin-top:12px; font-size:14px; line-height:1.6; }
+.roundabout-example small { display:block; margin-top:6px; color:var(--muted); }
+.roundabout-example-answer { padding:14px; margin-top:14px; border-radius:10px; background:#e2f3e9; line-height:1.6; }
+.roundabout-example-answer p { margin:8px 0 0; }

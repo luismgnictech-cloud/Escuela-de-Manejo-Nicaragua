@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import questions from './data/questions.json';
 import Roundabouts from './Roundabouts';
+import RoundaboutExample from './RoundaboutExample';
 import { EXAM_QUESTIONS, POINTS_PER_ANSWER, PASS_SCORE, EXAM_MINUTES, scoreExam } from './examRules';
 
 const MODULES = [
@@ -383,7 +384,8 @@ function PracticeSetup({ onStart, mistakeCount }) {
   );
 }
 
-function QuestionVisual({ question }) {
+function QuestionVisual({ question, reveal = false }) {
+  if (/rotonda/i.test(question.question)) return <RoundaboutExample question={question} reveal={reveal} />;
   if (!question.image) return null;
   return (
     <div className="question-visual">
@@ -476,7 +478,7 @@ function PracticeSession({ session, onExit, recordAnswer }) {
           <span>Pregunta {question.number}</span>
         </div>
         <h1>{question.question}</h1>
-        <QuestionVisual question={question} />
+        <QuestionVisual question={question} reveal={revealed} />
         <AnswerOptions question={question} selected={selected} onSelect={setSelected} reveal={revealed} disabled={revealed} />
 
         {revealed && (
@@ -593,6 +595,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
               {!correct && (
                 <p>Tu respuesta: {selected === null ? 'Sin responder' : question.options[selected]?.text}</p>
               )}
+              <RoundaboutExample question={question} reveal />
               <p>Respuesta oficial: <strong>{question.options[question.correctIndex].text}</strong></p>
               <small>Fuente: {question.source.label}</small>
             </article>
