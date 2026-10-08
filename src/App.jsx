@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import questions from './data/questions.json';
 import Roundabouts from './Roundabouts';
+import { EXAM_QUESTIONS, POINTS_PER_ANSWER, PASS_SCORE, scoreExam } from './examRules';
 
 const MODULES = [
   {
@@ -505,7 +506,6 @@ function PracticeSession({ session, onExit, recordAnswer }) {
 
 function ExamSetup({ onStart }) {
   const [module, setModule] = useState('all');
-  const [amount, setAmount] = useState(20);
   const [minutes, setMinutes] = useState(20);
   const available = module === 'all' ? questions.length : questions.filter((q) => q.module === module).length;
 
@@ -520,12 +520,10 @@ function ExamSetup({ onStart }) {
         <h2>1. Contenido</h2>
         <ModuleSelector selected={module} onSelect={setModule} />
 
-        <h2>2. Cantidad de preguntas</h2>
-        <div className="pill-options">
-          {[10, 20, 30, 40].filter((value) => value <= available).map((value) => (
-            <button key={value} className={amount === value ? 'selected' : ''} onClick={() => setAmount(value)}>{value}</button>
-          ))}
-        </div>
+        <h2>2. Preguntas y puntuación</h2>
+        <p>{EXAM_QUESTIONS} preguntas · {POINTS_PER_ANSWER} puntos por respuesta correcta · 100 puntos en total.</p>
+        <p>Para aprobar necesitás al menos {PASS_SCORE} puntos: 20 respuestas correctas de 25. Las respuestas incorrectas o sin responder valen 0 puntos.</p>
+        {available < EXAM_QUESTIONS && <p role="alert">Este módulo no tiene suficientes preguntas para un simulacro de 25.</p>}
 
         <h2>3. Tiempo</h2>
         <div className="pill-options">
@@ -534,7 +532,7 @@ function ExamSetup({ onStart }) {
           ))}
         </div>
 
-        <button className="button primary full-width" onClick={() => onStart(module, Math.min(amount, available), minutes)}>
+        <button className="button primary full-width" disabled={available < EXAM_QUESTIONS} onClick={() => onStart(module, minutes)}>
           Comenzar simulacro <ChevronRight size={18} />
         </button>
       </div>
@@ -573,20 +571,22 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
       selected: answers[question.id] ?? null,
       correct: answers[question.id] === question.correctIndex,
     }));
-    const summary = { correct, total: session.length, details };
+    const summary = { correct, total: session.length, details, ...scoreExam(correct) };
     setResult(summary);
     recordExam(summary);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (result) {
-    const percentage = Math.round((result.correct / result.total) * 100);
+    const { score, passed } = result;
     return (
       <section className="exam-result">
         <div className="result-card compact">
           <span className="result-icon"><Medal /></span>
           <span className="eyebrow">Simulacro finalizado</span>
-          <h1>{percentage}%</h1>
+          <h1>{score} / 100 puntos</h1>
+          <h2>{passed ? 'Aprobado' : 'No aprobado'}</h2>
+          <p>Mínimo para aprobar: {PASS_SCORE} puntos.</p>
           <p>{result.correct} respuestas correctas de {result.total}.</p>
           <button className="button primary" onClick={onExit}>Hacer otro simulacro</button>
         </div>
@@ -625,7 +625,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
       <div className="session-progress"><span style={{ width: `${(answered / session.length) * 100}%` }} /></div>
 
       <article className="question-card">
-        <div className="question-meta"><span>{moduleMeta(question.module)?.name}</span><span>Pregunta {index + 1}</span></div>
+        <div className="question-meta"><span>{moduleMeta(question.module)?.name}</span><span>Pregunta {index + 1} · {POINTS_PER_ANSWER} puntos</span></div>
         <h1>{question.question}</h1>
         <QuestionVisual question={question} />
         <AnswerOptions
@@ -745,9 +745,10 @@ export default function App() {
     window.scrollTo({ top: 0 });
   };
 
-  const startExam = (module, amount, minutes) => {
+  const startExam = (module, minutes) => {
     const pool = module === 'all' ? questions : questions.filter((question) => question.module === module);
-    setExamSession(shuffle(pool).slice(0, amount));
+    if (pool.length < EXAM_QUESTIONS) return;
+    setExamSession(shuffle(pool).slice(0, EXAM_QUESTIONS));
     setExamMinutes(minutes);
     setView('exam-session');
     window.scrollTo({ top: 0 });
@@ -775,13 +776,13 @@ export default function App() {
     });
   };
 
-  const recordExam = ({ correct, total, details }) => {
+  const recordExam = ({ correct, total, details, score, passed }) => {
     setProgress((current) => {
       const next = {
         ...current,
         examsCompleted: current.examsCompleted + 1,
         examHistory: [
-          { date: new Date().toISOString(), correct, total },
+          { date: new Date().toISOString(), correct, total, score, passed },
           ...current.examHistory,
         ].slice(0, 20),
       };
