@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import questions from './data/questions.json';
 import Roundabouts from './Roundabouts';
-import { EXAM_QUESTIONS, POINTS_PER_ANSWER, PASS_SCORE, scoreExam } from './examRules';
+import { EXAM_QUESTIONS, POINTS_PER_ANSWER, PASS_SCORE, EXAM_MINUTES, scoreExam } from './examRules';
 
 const MODULES = [
   {
@@ -506,7 +506,6 @@ function PracticeSession({ session, onExit, recordAnswer }) {
 
 function ExamSetup({ onStart }) {
   const [module, setModule] = useState('all');
-  const [minutes, setMinutes] = useState(20);
   const available = module === 'all' ? questions.length : questions.filter((q) => q.module === module).length;
 
   return (
@@ -514,7 +513,7 @@ function ExamSetup({ onStart }) {
       <div className="workspace-header">
         <span className="eyebrow"><Target size={16} /> Simulador de examen</span>
         <h1>Probá tus conocimientos sin pistas</h1>
-        <p>Las respuestas se revisan únicamente al finalizar el simulacro.</p>
+        <p>El simulacro dura 30 minutos. Las respuestas se revisan únicamente al finalizar.</p>
       </div>
       <div className="setup-card">
         <h2>1. Contenido</h2>
@@ -525,14 +524,7 @@ function ExamSetup({ onStart }) {
         <p>Para aprobar necesitás al menos {PASS_SCORE} puntos: 20 respuestas correctas de 25. Las respuestas incorrectas o sin responder valen 0 puntos.</p>
         {available < EXAM_QUESTIONS && <p role="alert">Este módulo no tiene suficientes preguntas para un simulacro de 25.</p>}
 
-        <h2>3. Tiempo</h2>
-        <div className="pill-options">
-          {[10, 20, 30].map((value) => (
-            <button key={value} className={minutes === value ? 'selected' : ''} onClick={() => setMinutes(value)}>{value} min</button>
-          ))}
-        </div>
-
-        <button className="button primary full-width" disabled={available < EXAM_QUESTIONS} onClick={() => onStart(module, minutes)}>
+        <button className="button primary full-width" disabled={available < EXAM_QUESTIONS} onClick={() => onStart(module)}>
           Comenzar simulacro <ChevronRight size={18} />
         </button>
       </div>
@@ -725,7 +717,6 @@ export default function App() {
   const [view, setView] = useState('home');
   const [practiceSession, setPracticeSession] = useState(null);
   const [examSession, setExamSession] = useState(null);
-  const [examMinutes, setExamMinutes] = useState(20);
   const [progress, setProgress] = useStoredProgress();
   const { canInstall, installed, install } = useInstallApp();
 
@@ -745,11 +736,10 @@ export default function App() {
     window.scrollTo({ top: 0 });
   };
 
-  const startExam = (module, minutes) => {
+  const startExam = (module) => {
     const pool = module === 'all' ? questions : questions.filter((question) => question.module === module);
     if (pool.length < EXAM_QUESTIONS) return;
     setExamSession(shuffle(pool).slice(0, EXAM_QUESTIONS));
-    setExamMinutes(minutes);
     setView('exam-session');
     window.scrollTo({ top: 0 });
   };
@@ -831,7 +821,7 @@ export default function App() {
   }
   if (view === 'exam') content = <ExamSetup onStart={startExam} />;
   if (view === 'exam-session' && examSession) {
-    content = <ExamSession session={examSession} minutes={examMinutes} onExit={() => setView('exam')} recordExam={recordExam} />;
+    content = <ExamSession session={examSession} minutes={EXAM_MINUTES} onExit={() => setView('exam')} recordExam={recordExam} />;
   }
   if (view === 'progress') {
     content = <ProgressView progress={progress} onReview={() => startPractice('mistakes', true)} onReset={resetProgress} />;
