@@ -581,7 +581,6 @@ function ProgressView({ progress, onReview, onReset }) {
         </div>
       </div>
 
-      <div className="rb-progress-summary"><h2>Práctica en rotondas</h2><p>{Object.keys(progress.roundabouts || {}).length} de 6 desafíos completados.</p><p>{Object.values(progress.roundabouts || {}).filter(r => r.errors === 0).length} completados sin errores en el último intento.</p></div>
       <button className="danger-link" onClick={onReset}>Borrar progreso de este navegador</button>
     </section>
   );
@@ -696,7 +695,7 @@ export default function App() {
       />
     );
   }
-  if (view === 'roundabouts') content = <Roundabouts progress={progress.roundabouts} onComplete={(id, result) => setProgress(current => ({ ...current, roundabouts: { ...current.roundabouts, [id]: result } }))} />;
+  if (view === 'roundabouts') content = <Roundabouts />;
   if (view === 'practice') content = <PracticeSetup onStart={startPractice} mistakeCount={mistakeIds.length} />;
   if (view === 'practice-session' && practiceSession) {
     content = <PracticeSession session={practiceSession} onExit={() => setView('practice')} recordAnswer={recordAnswer} />;
