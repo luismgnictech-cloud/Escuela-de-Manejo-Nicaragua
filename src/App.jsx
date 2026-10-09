@@ -152,7 +152,7 @@ function Header({ view, setView, canInstall, onInstall }) {
   const nav = [
     ['home', 'Inicio', Home],
     ['practice', 'Practicar', Play],
-    ['exam', 'Simulacro', Target],
+    ['exam', 'Prueba', Target],
     ['roundabouts', 'Rotondas', RotateCcw],
     ['progress', 'Progreso', TrendingUp],
   ];
@@ -396,7 +396,7 @@ function ExamSetup({ onStart }) {
       <div className="workspace-header">
         <span className="eyebrow"><Target size={16} /> Simulador de examen</span>
         <h1>Probá tus conocimientos sin pistas</h1>
-        <p>El simulacro dura 30 minutos. Las respuestas se revisan únicamente al finalizar.</p>
+        <p>La prueba dura 30 minutos. Las respuestas se revisan únicamente al finalizar.</p>
       </div>
       <div className="setup-card">
         <h2>1. Contenido</h2>
@@ -405,10 +405,10 @@ function ExamSetup({ onStart }) {
         <h2>2. Preguntas y puntuación</h2>
         <p>{EXAM_QUESTIONS} preguntas · {POINTS_PER_ANSWER} puntos por respuesta correcta · 100 puntos en total.</p>
         <p>Para aprobar necesitás al menos {PASS_SCORE} puntos: 20 respuestas correctas de 25. Las respuestas incorrectas o sin responder valen 0 puntos.</p>
-        {available < EXAM_QUESTIONS && <p role="alert">Este módulo no tiene suficientes preguntas para un simulacro de 25.</p>}
+        {available < EXAM_QUESTIONS && <p role="alert">Este módulo no tiene suficientes preguntas para una prueba de 25.</p>}
 
         <button className="button primary full-width" disabled={available < EXAM_QUESTIONS} onClick={() => onStart(module)}>
-          Comenzar simulacro <ChevronRight size={18} />
+          Comenzar prueba <ChevronRight size={18} />
         </button>
       </div>
     </section>
@@ -458,12 +458,12 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
       <section className="exam-result">
         <div className="result-card compact">
           <span className="result-icon"><Medal /></span>
-          <span className="eyebrow">Simulacro finalizado</span>
+          <span className="eyebrow">Prueba finalizada</span>
           <h1>{score} / 100 puntos</h1>
           <h2>{passed ? 'Aprobado' : 'No aprobado'}</h2>
           <p>Mínimo para aprobar: {PASS_SCORE} puntos.</p>
           <p>{result.correct} respuestas correctas de {result.total}.</p>
-          <button className="button primary" onClick={onExit}>Hacer otro simulacro</button>
+          <button className="button primary" onClick={onExit}>Hacer otra prueba</button>
         </div>
         <div className="review-list">
           <h2>Revisión</h2>
@@ -543,7 +543,7 @@ function ProgressView({ progress, onReview, onReset }) {
       <div className="stats-grid">
         <div className="stat-card"><Gauge /><span>Aciertos</span><strong>{accuracy}%</strong></div>
         <div className="stat-card"><CheckCircle2 /><span>Respondidas</span><strong>{progress.totalAnswered}</strong></div>
-        <div className="stat-card"><Target /><span>Simulacros</span><strong>{progress.examsCompleted}</strong></div>
+        <div className="stat-card"><Target /><span>Pruebas</span><strong>{progress.examsCompleted}</strong></div>
         <div className="stat-card"><CircleAlert /><span>Por repasar</span><strong>{Object.keys(progress.mistakes).length}</strong></div>
       </div>
 
@@ -566,7 +566,7 @@ function ProgressView({ progress, onReview, onReset }) {
         <div className="progress-panel">
           <div className="panel-heading"><h2>Errores frecuentes</h2>{mistakeEntries.length > 0 && <button onClick={onReview}>Repasar</button>}</div>
           {mistakeEntries.length === 0 ? (
-            <div className="empty-state"><Medal /><strong>Aún no hay errores guardados</strong><p>Completá una práctica o un simulacro para ver recomendaciones.</p></div>
+            <div className="empty-state"><Medal /><strong>Aún no hay errores guardados</strong><p>Completá una práctica o una prueba para ver recomendaciones.</p></div>
           ) : (
             <div className="mistake-list">
               {mistakeEntries.map(({ question, count }) => (

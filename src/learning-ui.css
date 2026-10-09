@@ -80,3 +80,14 @@ button:focus-visible,select:focus-visible { outline:3px solid #0875c5; outline-o
  .path-connector { transform:rotate(-22deg); }
  .position-1 .path-connector,.position-2 .path-connector { transform:rotate(22deg); }
 }
+.path-level-description { display:block; font-size:.85rem; font-weight:500; line-height:1.5; margin-top:.5rem; }
+.path-step { width:11rem; height:13rem; }
+.path-step > strong { line-height:1.3; margin-top:1.1rem; }
+.path-stage-label { display:block; font-size:.8rem; margin:.3rem 0; color:#526773; }
+.path-step > small { display:block; font-size:.75rem; line-height:1.4; }
+.path-connector { height:11rem; }
+@media(max-width:400px) {
+ .path-step.position-1 { transform:translateX(2.7rem); }
+ .path-step.position-3 { transform:translateX(-2.7rem); }
+ .path-stats { flex-wrap:wrap; }
+}
