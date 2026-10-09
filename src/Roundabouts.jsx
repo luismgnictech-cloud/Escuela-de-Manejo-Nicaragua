@@ -1,8 +1,8 @@
 import { useId } from 'react';
-import { RotateCcw, MapPin, BookOpenCheck } from 'lucide-react';
+import { RotateCcw, BookOpenCheck } from 'lucide-react';
 import './roundabout-guide.css';
+import ManaguaAtlas from './ManaguaAtlas';
 const SOURCE = 'https://tramitesenlinea.policia.gob.ni/DocT/EnsenanzasTransito/CirculacionenIntersecciones.pdf';
-const places = ["Bello Horizonte","Cristo Rey","El Periodista","Jean Paul Genie","La Virgen","El Güegüense","Centroamérica","Universitaria","Hugo Chávez / Plaza Inter","Fuerza Aérea","La Garita","Rubén Darío / Metrocentro"];
 function RouteDiagram({ exit, lanes = 2, color, title }) {
   const uid = useId().replace(/:/g, '');
   const radius = exit === 1 ? 158 : 125;
@@ -54,7 +54,7 @@ export default function Roundabouts() {
       ['line','Línea de pare','Marca el punto donde detener el vehículo antes de entrar.'],
       ['speed','Velocidad','La guía oficial establece un máximo de 30 km/h en rotondas.'],
     ].map(([type,title,text]) => <article className="rg-sign-card" key={type}><Sign type={type}/><h3>{title}</h3><p>{text}</p></article>)}</div><div className="rg-panel"><h3>También mirá el pavimento</h3><p>Las flechas orientan el sentido de circulación, las líneas continuas delimitan los carriles y las islas canalizadoras ordenan los accesos. Revisá espejos, peatones y el espacio disponible antes de entrar.</p></div></section>
-    <section id="rg-managua"><h2>Rotondas de Managua</h2><p>Referencias para ubicar los lugares y preparar futuros planos. Las fichas no confirman el número actual de carriles ni la señalización. Los recorridos anteriores son modelos generales.</p><div className="rg-places">{places.map(name => {const works=/Periodista|Rubén/.test(name);return <article className="rg-place" key={name}><MapPin size={21}/><div><h3>{name}</h3><span className={works ? 'rg-status works' : 'rg-status'}>{works ? 'Transformación vial · verificar estado actual' : 'Trazado y señales pendientes de verificación'}</span><a href={'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Rotonda ' + name + ' Managua Nicaragua')} target="_blank" rel="noreferrer">Ubicar en Google Maps ↗</a></div></article>;})}</div></section>
+    <section id="rg-managua"><h2>Rotondas de Managua · recorridos sobre capturas reales</h2><ManaguaAtlas/></section>
     <aside className="rg-source"><BookOpenCheck size={24}/><div><h2>Fuente del contenido vial</h2><p>Policía Nacional de Nicaragua · Circulación en Intersecciones y Rotondas, páginas 14–20. Diagramas propios simplificados; no están a escala.</p><a href={SOURCE} target="_blank" rel="noreferrer">Consultar material oficial ↗</a></div></aside>
   </section>;
 }

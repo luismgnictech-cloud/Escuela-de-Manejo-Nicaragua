@@ -1,0 +1,20 @@
+import { useId } from 'react';
+import { MANAGUA_MAPS } from './managuaMaps';
+const COLORS=['#ffd44b','#f2689b','#36d8ef','#c89bff'];
+function Trace({place,from,to}) {
+ const uid=useId().replace(/:/g,'');
+ const [cx,cy,rx,ry]=place.ring;
+ const entry=place.access[from], exit=place.access[to];
+ const start=entry[1]-8, finish=exit[1]+8;
+ let span=(start-finish+360)%360;if(from===to)span=344;
+ const pts=Array.from({length:Math.ceil(span/5)+1},(_,i)=>{let a=(start-span*i/Math.ceil(span/5))*Math.PI/180;return [cx+rx*Math.cos(a),cy+ry*Math.sin(a)];});
+ const endpoint=(a,incoming)=>{const dx=cx-a[2],dy=cy-a[3],length=Math.hypot(dx,dy),side=incoming?12:-12;return [a[2]-dy/length*side,a[3]+dx/length*side];};
+ const origin=endpoint(entry,true),destination=endpoint(exit,false),first=pts[0],last=pts[pts.length-1];
+ const tangent=a=>[rx*Math.sin(a*Math.PI/180),-ry*Math.cos(a*Math.PI/180)];
+ const ti=tangent(start),te=tangent(start-span);const scale=v=>v.map(n=>n/Math.hypot(...v)*30);
+ const t1=scale(ti),t2=scale(te);
+ const path=`M${origin.join(' ')} C${origin.join(' ')} ${first[0]-t1[0]} ${first[1]-t1[1]} ${first.join(' ')} L${pts.slice(1).map(p=>p.join(' ')).join(' L')} C${last[0]+t2[0]} ${last[1]+t2[1]} ${destination.join(' ')} ${destination.join(' ')}`;
+
+ return <figure className="ma-trace"><svg viewBox={place.frame||'300 180 850 650'} role="img" aria-label={`${place.name}: de ${entry[0]} a ${exit[0]}. Trazo orientativo sobre imagen satelital.`}><defs><marker id={uid} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill={COLORS[to]}/></marker></defs><image href={`${import.meta.env.BASE_URL}maps/${place.id}.jpg`} width="1363" height="936"/><path d={path} fill="none" stroke="#102736" strokeWidth="15" opacity=".8" strokeLinejoin="round"/><path d={path} fill="none" stroke={COLORS[to]} strokeWidth="8" strokeLinejoin="round" markerEnd={`url(#${uid})`}/><circle cx={entry[2]} cy={entry[3]} r="15" fill="white" stroke="#102736" strokeWidth="3"/><text x={entry[2]} y={entry[3]+6} textAnchor="middle" fontSize="18" fontWeight="900">{from+1}</text></svg><figcaption>{from+1} → {to+1} · {from===to?'Retorno al mismo acceso':exit[0]}<small>Trazo de orientación; no representa un carril específico.</small></figcaption></figure>;
+}
+export default function ManaguaAtlas(){return <div className="ma-atlas"><p>Capturas satelitales de Google Maps tomadas el 9 de octubre de 2026. La fecha de captura no es la fecha de la imagen aérea. Los trazos ayudan a reconocer conexiones y el sentido de circulación; las señales del lugar determinan las maniobras permitidas.</p><nav className="ma-index" aria-label="Rotondas de Managua">{MANAGUA_MAPS.map(p=><a key={p.id} href={'#mapa-'+p.id}>{p.name}</a>)}</nav>{MANAGUA_MAPS.map(p=><article className="ma-place" id={'mapa-'+p.id} key={p.id}><header><h3>{p.name}</h3><p>{p.note}</p></header><a href={`${import.meta.env.BASE_URL}maps/${p.id}.jpg`} target="_blank" rel="noreferrer" className="ma-original"><img src={`${import.meta.env.BASE_URL}maps/${p.id}.jpg`} alt={`Vista satelital de ${p.name}, Google Maps`} loading="lazy"/><span>Ver captura completa y atribución ↗</span></a>{p.access?.length>0&&<><p className="ma-key">{p.access.map((a,i)=><span key={a[0]}><b>{i+1}</b> {a[0]}</span>)}</p><p>Conexiones esquemáticas desde cada acceso. El retorno se muestra como referencia geométrica y requiere verificar que esté permitido.</p>{p.access.map((a,i)=><section className="ma-entry" key={a[0]}><h4>Desde {a[0]}</h4><div className="ma-traces">{p.access.map((_,j)=><Trace key={j} place={p} from={i} to={j}/>)}</div></section>)}</>}<footer>Base cartográfica: Google Maps. Las atribuciones de proveedores figuran en la captura completa. {p.access?.length?'No se han verificado los carriles ni todas las restricciones en sitio.':'Se conserva la captura como referencia; no se trazan rutas de circulación sin confirmar la configuración actual.'}</footer></article>)}</div>}
