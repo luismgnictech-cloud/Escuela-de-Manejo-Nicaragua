@@ -10,3 +10,22 @@ html{scroll-behavior:smooth}
 .rg-index a,.ma-original{transition:color .25s ease,background-color .25s ease}
 @keyframes ma-reveal{from{opacity:0;transform:translateY(.6rem)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ma-place{animation:none}.ma-index button,.rg-index a,.ma-original{transition:none}}
+
+.ma-dialog{padding:0;border:0;border-radius:1.4rem;width:min(56rem,calc(100vw - 2rem));max-height:90dvh;color:#184b40;background:#fff;box-shadow:0 1.5rem 5rem #0004;overflow:auto}
+.ma-dialog::backdrop{background:#102b26b8;backdrop-filter:blur(6px)}
+.ma-dialog[open]{animation:ma-reveal .3s ease both}
+.ma-dialog-content{padding:1.5rem}
+.ma-gallery-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
+.ma-gallery-header h2{margin:.4rem 0 0;font-size:1.6rem}
+.ma-close{border:0;border-radius:50%;background:#edf4eb;color:#184b40;font-size:1.8rem;min-width:2.75rem;min-height:2.75rem;cursor:pointer}
+.ma-gallery-original{display:block;width:100%;height:auto;max-height:49dvh;object-fit:contain;background:#edf4eb}
+.ma-gallery-slide{animation:ma-reveal .3s ease both}
+.ma-gallery-slide svg{max-height:49dvh;width:100%}
+.ma-gallery-controls{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:1rem 0}
+.ma-gallery-controls button{border:1px solid #184b40;border-radius:.7rem;background:#184b40;color:white;padding:.7rem 1rem;font:inherit;cursor:pointer;transition:background-color .25s ease}
+.ma-gallery-controls button:hover{background:#2d6659}.ma-gallery-controls button:disabled{opacity:.4;cursor:default}
+.ma-gallery-controls span{font-size:.85rem;text-align:center}
+.ma-gallery-note,.ma-gallery-source{font-size:.75rem;line-height:1.5}
+.ma-dialog button:focus-visible{outline:3px solid #dfa84b;outline-offset:3px}
+@media(max-width:600px){.ma-dialog-content{padding:1rem}.ma-gallery-controls button{padding:.65rem;font-size:.8rem}.ma-gallery-header h2{font-size:1.3rem}}
+@media(prefers-reduced-motion:reduce){.ma-dialog[open],.ma-gallery-slide{animation:none}.ma-gallery-controls button{transition:none}}
