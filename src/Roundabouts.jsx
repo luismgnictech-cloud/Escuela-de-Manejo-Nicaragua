@@ -2,6 +2,7 @@ import { useId } from 'react';
 import { RotateCcw, BookOpenCheck } from 'lucide-react';
 import './roundabout-guide.css';
 import ManaguaAtlas from './ManaguaAtlas';
+import TrafficSignals from './TrafficSignals';
 const SOURCE = 'https://tramitesenlinea.policia.gob.ni/DocT/EnsenanzasTransito/CirculacionenIntersecciones.pdf';
 function RouteDiagram({ exit, lanes = 2, color, title, lane }) {
   const uid = useId().replace(/:/g, '');
@@ -29,14 +30,6 @@ function RouteDiagram({ exit, lanes = 2, color, title, lane }) {
     <text x="356" y="487" fontSize="13" fill="#334b3c">ENTRADA</text>
   </svg>;
 }
-function Sign({ type }) {
-  return <svg viewBox="0 0 100 100" aria-hidden="true" className="rg-sign">
-    {type === 'yield' ? <><path d="M12 18H88L50 84Z" fill="white" stroke="#d43d46" strokeWidth="9"/><text x="50" y="39" textAnchor="middle" fontSize="10" fontWeight="800">CEDA</text><text x="50" y="51" textAnchor="middle" fontSize="10" fontWeight="800">EL PASO</text></> :
-    type === 'stop' ? <><path d="M30 8H70L92 30V70L70 92H30L8 70V30Z" fill="#d43d46"/><text x="50" y="57" textAnchor="middle" fontSize="20" fontWeight="900" fill="white">PARE</text></> :
-    type === 'line' ? <><rect x="10" y="8" width="80" height="84" rx="8" fill="#64717d"/><path d="M20 60H80" stroke="white" strokeWidth="8"/></> :
-    <><circle cx="50" cy="50" r="42" fill="white" stroke="#d43d46" strokeWidth="8"/><text x="50" y="62" textAnchor="middle" fontSize="35" fontWeight="800">30</text></>}
-  </svg>;
-}
 export default function Roundabouts() {
   const examples = [
     {exit:1,color:'#df9c12',title:'Primera salida · Girar a la derecha',text:'Elegí el carril derecho antes de entrar. Este recorrido muestra la primera salida desde el acceso inferior.'},
@@ -55,12 +48,7 @@ export default function Roundabouts() {
     <nav className="rg-index" aria-label="Contenido de la guía"><a href="#rg-routes">Recorridos</a><a href="#rg-lanes">Carriles</a><a href="#rg-signs">Señales</a><a href="#rg-managua">Managua</a></nav>
     <section id="rg-routes"><h2>Una salida, un recorrido</h2><p>Esquemas con cuatro accesos, organizados según la cantidad de carriles. Las flechas indican el destino; los dibujos no representan una rotonda específica de Managua.</p>{[2,3].map(lanes=><section className="rg-lane-examples" key={lanes} aria-labelledby={`rg-examples-${lanes}`}><header className="rg-lane-header"><span className="eyebrow">Modelo de {lanes} carriles</span><h3 id={`rg-examples-${lanes}`}>Rotondas de {lanes === 2 ? 'dos' : 'tres'} carriles</h3><p>{lanes === 2 ? 'Primera, segunda y tercera salida, retorno y la variante de frente desde el carril derecho.' : 'Primera salida desde el derecho, variantes de frente desde el centro y el izquierdo, tercera salida y retorno.'}</p></header><div className="rg-routes">{examples.filter(e=>(e.lanes || 2)===lanes).map(e=><article className="rg-route-card" key={e.title}><RouteDiagram {...e}/><div><span className="rg-badge" style={{background:e.color}}>{e.exit === 4 ? 'Retorno' : `${e.exit}ª salida`}</span><h4>{e.title}</h4><p>{e.text}</p></div></article>)}</div></section>)}</section>
     <section className="rg-panel" id="rg-lanes"><h2>Elegí el carril antes de entrar</h2><div className="rg-table-wrap"><table><caption>Destinos por carril según la guía de la Policía Nacional</caption><thead><tr><th>Modelo</th><th>Derecho</th><th>Centro</th><th>Izquierdo</th></tr></thead><tbody><tr><th>Dos carriles</th><td>Derecha o de frente</td><td>No aplica</td><td>De frente, izquierda o retorno</td></tr><tr><th>Tres carriles</th><td>Derecha</td><td>De frente</td><td>De frente, izquierda o retorno</td></tr></tbody></table></div><p>La guía indica conservar el carril de entrada hasta la salida, evitar cambios de carril y usar la direccional derecha al salir. Respetá las señales y las indicaciones del agente en el lugar.</p></section>
-    <section id="rg-signs"><h2>Reconocé la señalización</h2><p>Estos símbolos explican la señalización; su ubicación en los modelos es ilustrativa.</p><div className="rg-signs">{[
-      ['yield','Ceda el paso','Respetá la prioridad del tráfico que circula dentro. La guía oficial indica detenerse antes de incorporarse.'],
-      ['stop','Pare','Detenete ante la señal y observá antes de continuar.'],
-      ['line','Línea de pare','Marca el punto donde detener el vehículo antes de entrar.'],
-      ['speed','Velocidad','La guía oficial establece un máximo de 30 km/h en rotondas.'],
-    ].map(([type,title,text]) => <article className="rg-sign-card" key={type}><Sign type={type}/><h3>{title}</h3><p>{text}</p></article>)}</div><div className="rg-panel"><h3>También mirá el pavimento</h3><p>Las flechas orientan el sentido de circulación, las líneas continuas delimitan los carriles y las islas canalizadoras ordenan los accesos. Revisá espejos, peatones y el espacio disponible antes de entrar.</p></div></section>
+    <TrafficSignals/>
     <section id="rg-managua"><h2>Rotondas de Managua · recorridos sobre capturas reales</h2><ManaguaAtlas/></section>
     <aside className="rg-source"><BookOpenCheck size={24}/><div><h2>Fuente del contenido vial</h2><p>Policía Nacional de Nicaragua · Circulación en Intersecciones y Rotondas, páginas 14–20. Diagramas propios simplificados; no están a escala.</p><a href={SOURCE} target="_blank" rel="noreferrer">Consultar material oficial ↗</a></div></aside>
   </section>;
