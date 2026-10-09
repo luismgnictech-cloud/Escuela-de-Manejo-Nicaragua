@@ -11,19 +11,7 @@ export function createExam(pool, storage = localStorage, random = Math.random) {
   const available = pool.filter(q => !used.has(q.id));
   if (available.length < EXAM_QUESTIONS) return { questions:null, remaining:available.length };
   const picked = randomized(available,random).slice(0,EXAM_QUESTIONS);
-  const formatted = picked.map((q,i) => {
-    const option = q.options[q.correctIndex].text;
-    const tokens = [...option.matchAll(/[\p{L}\p{N}]+/gu)].filter(m => m[0].length >= 4);
-    if (i % 5 === 2 && tokens.length && !/anteriores|todas|ninguna|ambas/i.test(option)) {
-      const token = tokens[Math.floor(random()*tokens.length)];
-      return {...q, examFormat:'complete', missingWord:token[0], sentence:option.slice(0,token.index)+'________'+option.slice(token.index+token[0].length)};
-    }
-    if (i % 5 === 4 && q.options.length > 1 && q.options.every(o => !/anteriores|todas|ninguna|ambas/i.test(o.text))) {
-      const proposedIndex = random() < .5 ? q.correctIndex : q.options.findIndex((_,idx)=>idx!==q.correctIndex);
-      return {...q, examFormat:'boolean', proposedIndex};
-    }
-    return {...q,examFormat:'choice', optionOrder:randomized(q.options.map((_,idx)=>idx),random)};
-  });
+  const formatted = picked.map(q=>({...q,examFormat:'development'}));
   storage.setItem(KEY,JSON.stringify([...used,...picked.map(q=>q.id)]));
   return {questions:formatted,remaining:available.length-EXAM_QUESTIONS};
 }

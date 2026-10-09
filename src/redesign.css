@@ -42,3 +42,8 @@ button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible 
 .exam-complete input { width:100%; padding:.9rem; border:1px solid #8da584; border-radius:.7rem; background:#fff; font-size:1rem; }
 .exam-complete input:focus-visible { outline:3px solid #a8791c; outline-offset:3px; }
 .exam-toolbar { flex-wrap:wrap; }
+
+.exam-complete textarea { display:block; width:100%; resize:vertical; min-height:9rem; padding:1rem; border:1px solid #8da584; border-radius:.7rem; font:inherit; line-height:1.6; background:white; }
+.exam-complete textarea:focus-visible { outline:3px solid #a8791c; outline-offset:3px; }
+.exam-complete small { display:block; margin-top:.8rem; color:var(--muted); line-height:1.5; }
+.pending-review { border:1px solid #d6b052; background:#fff9e7; }

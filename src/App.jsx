@@ -26,7 +26,8 @@ import {
 import questions from './data/questions.json';
 import LearningPath from './LearningPath';
 import HomePage from './HomePage';
-import { createExam, normalizeAnswer } from './examDeck';
+import { createExam } from './examDeck';
+import { criteria, evaluateDevelopment } from './developmentCriteria';
 import VisualGuides from './VisualGuides';
 import Roundabouts from './Roundabouts';
 import RoundaboutExample from './RoundaboutExample';
@@ -418,14 +419,13 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
   }, [remaining]);
 
   const submit = () => {
-    const correct = session.filter((question) => answers[question.id] === question.correctIndex).length;
-    const details = session.map((question) => ({
-      question,
-      selected: answers[question.id] ?? null,
-      written: writtenAnswers[question.id] ?? null,
-      correct: answers[question.id] === question.correctIndex,
+    const details = session.map(question => ({
+      question, selected:null, written:writtenAnswers[question.id] || '',
+      ...evaluateDevelopment(question,writtenAnswers[question.id] || ''),
     }));
-    const summary = { correct, total: session.length, details, ...scoreExam(correct) };
+    const correct=details.filter(detail=>detail.status==='correct').length;
+    const pending=details.filter(detail=>detail.status==='pending').length;
+    const summary = { correct, pending, total:session.length, details, ...scoreExam(correct) };
     setResult(summary);
     recordExam(summary);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -438,25 +438,24 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
         <div className="result-card compact">
           <span className="result-icon"><Medal /></span>
           <span className="eyebrow">Prueba finalizada</span>
-          <h1>{score} / 100 puntos</h1>
-          <h2>{passed ? 'Aprobado' : 'No aprobado'}</h2>
+          <h1>{score} / 100 puntos{result.pending ? " · provisional" : ""}</h1>
+          <h2>{result.pending ? 'Pendiente de revisión' : passed ? 'Aprobado' : 'No aprobado'}</h2>
+          {result.pending > 0 && <p>{result.pending} respuestas por revisar. Puntaje provisional: {score}; máximo posible: {score + result.pending * POINTS_PER_ANSWER}. No se ha asignado una nota definitiva.</p>}
           <p>Mínimo para aprobar: {PASS_SCORE} puntos.</p>
           <p>{result.correct} respuestas correctas de {result.total}.</p>
           <button className="button primary" onClick={onExit}>Hacer otra prueba</button>
         </div>
         <div className="review-list">
           <h2>Revisión</h2>
-          {result.details.map(({ question, selected, written, correct }, detailIndex) => (
-            <article className={correct ? 'review-item correct-review' : 'review-item wrong-review'} key={question.id}>
+          {result.details.map(({ question, written, correct, status, reason }, detailIndex) => (
+            <article className={status === 'pending' ? 'review-item pending-review' : correct ? 'review-item correct-review' : 'review-item wrong-review'} key={question.id}>
               <div className="review-heading">
-                <span>{correct ? <CheckCircle2 /> : <XCircle />}</span>
+                <span>{status === 'pending' ? <Clock3 /> : correct ? <CheckCircle2 /> : <XCircle />}</span>
                 <div><small>Pregunta {detailIndex + 1}</small><strong>{question.question}</strong></div>
               </div>
-              {!correct && (
-                <p>Tu respuesta: {selected === null ? 'Sin responder' : written ?? question.options[selected]?.text ?? 'Respuesta incorrecta'}</p>
-              )}
+              <p>Tu respuesta: {written || 'Sin responder'}</p>
               <RoundaboutExample question={question} reveal />
-              <p>Respuesta oficial: <strong>{question.options[question.correctIndex].text}</strong></p>
+              <p>Respuesta de referencia: <strong>{criteria[question.id]?.reference}</strong></p><p>{reason}</p><ul>{criteria[question.id]?.requiredIdeas.map(idea=><li key={idea}>{idea}</li>)}</ul>
               <small>Fuente: {question.source.label}</small>
             </article>
           ))}
@@ -483,23 +482,15 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
         <div className="question-meta"><span>{moduleMeta(question.module)?.name}</span><span>Pregunta {index + 1} · {POINTS_PER_ANSWER} puntos</span></div>
         <h1>{question.question}</h1>
         <QuestionVisual question={question} />
-        {question.examFormat === 'complete' ? <div className="exam-complete">
-          <p>Completá la respuesta con la palabra que falta:</p>
-          <blockquote>{question.sentence}</blockquote>
-          <label htmlFor="exam-word">Palabra que falta</label>
-          <input id="exam-word" key={question.id} autoComplete="off" value={writtenAnswers[question.id] || ''} onChange={event => {
-            const text = event.target.value;
-            setWrittenAnswers(current => ({...current,[question.id]:text}));
-            setAnswers(current => { const next = {...current}; if (!text.trim()) delete next[question.id]; else next[question.id] = normalizeAnswer(text) === normalizeAnswer(question.missingWord) ? question.correctIndex : -1; return next; });
-          }} />
-        </div> : question.examFormat === 'boolean' ? <div className="exam-boolean">
-          <p>¿La siguiente afirmación responde correctamente a la pregunta?</p>
-          <blockquote>{question.options[question.proposedIndex].text}</blockquote>
-          <div className="answer-list">{[true,false].map(value => {
-            const mapped = value === (question.proposedIndex === question.correctIndex) ? question.correctIndex : -1;
-            return <button key={String(value)} className={'answer-option'+(answers[question.id]===mapped?' selected':'')} onClick={()=>{setAnswers(current=>({...current,[question.id]:mapped}));setWrittenAnswers(current=>({...current,[question.id]:value?'Verdadero':'Falso'}));}}>{value?'Verdadero':'Falso'}</button>;
-          })}</div>
-        </div> : <div className="answer-list">{question.optionOrder.map((originalIndex,position)=><button key={originalIndex} className={'answer-option'+(answers[question.id]===originalIndex?' selected':'')} onClick={()=>setAnswers(current=>({...current,[question.id]:originalIndex}))}><span className="answer-letter">{String.fromCharCode(65+position)}</span><span>{question.options[originalIndex].text}</span></button>)}</div>}
+        <div className="exam-complete">
+          <label htmlFor="exam-development">Escribí tu respuesta</label>
+          <textarea id="exam-development" key={question.id} rows={6} autoComplete="off" placeholder="Explicá tu respuesta con tus propias palabras…" value={writtenAnswers[question.id] || ''} onChange={event => {
+            const text=event.target.value;
+            setWrittenAnswers(current=>({...current,[question.id]:text}));
+            setAnswers(current=>{const next={...current};if(text.trim())next[question.id]=true;else delete next[question.id];return next;});
+          }}/>
+          <small>Las respuestas se evalúan al finalizar. Las redacciones no reconocidas quedan pendientes de revisión.</small>
+        </div>
         <div className="question-actions">
           <button className="button primary" onClick={() => { if(index < session.length-1) { setIndex(value=>value+1); window.scrollTo({top:0}); } else submit(); }}>Siguiente <ChevronRight size={18}/></button>
         </div>
@@ -616,7 +607,7 @@ export default function App() {
   const examStarting = useRef(false);
   const [examRemaining, setExamRemaining] = useState(null);
   const startExam = () => {
-    const next = createExam(questions);
+    const next = createExam(questions.filter(q => criteria[q.id]?.ready));
     setExamRemaining(next.remaining);
     setExamSession(next.questions);
     setView(next.questions ? 'exam-session' : 'exam-empty');
@@ -658,11 +649,12 @@ export default function App() {
         ...current,
         examsCompleted: current.examsCompleted + 1,
         examHistory: [
-          { date: new Date().toISOString(), correct, total, score, passed },
+          { date: new Date().toISOString(), correct, total, score, passed:details.some(d=>d.status==='pending') ? null : passed, pending:details.filter(d=>d.status==='pending').length },
           ...current.examHistory,
         ].slice(0, 20),
       };
-      details.forEach(({ question, correct: isCorrect }) => {
+      details.forEach(({ question, correct: isCorrect, status }) => {
+        if (status === 'pending') return;
         const moduleData = next.byModule[question.module] || { answered: 0, correct: 0 };
         next.totalAnswered += 1;
         next.totalCorrect += isCorrect ? 1 : 0;
