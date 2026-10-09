@@ -91,3 +91,5 @@ button:focus-visible,select:focus-visible { outline:3px solid #0875c5; outline-o
  .path-step.position-3 { transform:translateX(-2.7rem); }
  .path-stats { flex-wrap:wrap; }
 }
+
+@media(max-width:720px){.main-nav,.main-nav.open{grid-template-columns:repeat(6,minmax(0,1fr))}.main-nav button{font-size:9px}}

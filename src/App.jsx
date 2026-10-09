@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import questions from './data/questions.json';
 import LearningPath from './LearningPath';
+import VisualGuides from './VisualGuides';
 import Roundabouts from './Roundabouts';
 import RoundaboutExample from './RoundaboutExample';
 import { EXAM_QUESTIONS, POINTS_PER_ANSWER, PASS_SCORE, EXAM_MINUTES, scoreExam } from './examRules';
@@ -154,11 +155,13 @@ function Header({ view, setView, canInstall, onInstall }) {
     ['practice', 'Practicar', Play],
     ['exam', 'Prueba', Target],
     ['roundabouts', 'Rotondas', RotateCcw],
+    ['guides', 'Guías', BookOpenCheck],
     ['progress', 'Progreso', TrendingUp],
   ];
 
   const navigate = (next) => {
     setView(next);
+    window.history.replaceState(null, '', next === 'guides' ? '#guias' : window.location.pathname + window.location.search);
     setOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -180,7 +183,7 @@ function Header({ view, setView, canInstall, onInstall }) {
 
         <nav className={open ? 'main-nav open' : 'main-nav'}>
           {nav.map(([id, label, Icon]) => (
-            <button key={id} className={view === id ? 'active' : ''} onClick={() => navigate(id)}>
+            <button key={id} className={view === id || (id === 'guides' && view.startsWith('guide-')) ? 'active' : ''} onClick={() => navigate(id)}>
               <Icon size={17} /> {label}
             </button>
           ))}
@@ -587,7 +590,16 @@ function ProgressView({ progress, onReview, onReset }) {
 }
 
 export default function App() {
-  const [view, setView] = useState('home');
+  const [view, setView] = useState(() => window.location.hash.startsWith('#guia-') ? 'guide-' + window.location.hash.slice(6) : window.location.hash === '#guias' ? 'guides' : 'home');
+  useEffect(() => {
+    const sync = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#guia-')) setView('guide-' + hash.slice(6));
+      else if (hash === '#guias') setView('guides');
+    };
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
   const [practiceSession, setPracticeSession] = useState(null);
   const [examSession, setExamSession] = useState(null);
   const [progress, setProgress] = useStoredProgress();
@@ -695,6 +707,7 @@ export default function App() {
       />
     );
   }
+  if (view === 'guides' || view.startsWith('guide-')) content = <VisualGuides guideId={view.slice(6)} onOpen={id => { setView('guide-' + id); window.scrollTo({ top: 0 }); }} onBack={() => { setView('guides'); window.scrollTo({ top: 0 }); }} />;
   if (view === 'roundabouts') content = <Roundabouts />;
   if (view === 'practice') content = <PracticeSetup onStart={startPractice} mistakeCount={mistakeIds.length} />;
   if (view === 'practice-session' && practiceSession) {
