@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import questions from './data/questions.json';
 import LearningPath from './LearningPath';
+import HomePage from './HomePage';
 import VisualGuides from './VisualGuides';
 import Roundabouts from './Roundabouts';
 import RoundaboutExample from './RoundaboutExample';
@@ -152,7 +153,7 @@ function Header({ view, setView, canInstall, onInstall }) {
   const [open, setOpen] = useState(false);
   const nav = [
     ['home', 'Inicio', Home],
-    ['practice', 'Practicar', Play],
+    ['learning', 'Mi ruta', Play],
     ['exam', 'Prueba', Target],
     ['roundabouts', 'Rotondas', RotateCcw],
     ['guides', 'Guías', BookOpenCheck],
@@ -161,7 +162,7 @@ function Header({ view, setView, canInstall, onInstall }) {
 
   const navigate = (next) => {
     setView(next);
-    window.history.replaceState(null, '', next === 'guides' ? '#guias' : window.location.pathname + window.location.search);
+    window.history.replaceState(null, '', next === 'guides' ? '#guias' : next === 'learning' ? '#ruta' : next === 'home' ? window.location.pathname + window.location.search : '#'+next);
     setOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -198,8 +199,8 @@ function Header({ view, setView, canInstall, onInstall }) {
   );
 }
 
-function HomeView({ setView, startPractice, startLesson, progress }) {
-  return <LearningPath setView={setView} startPractice={startPractice} startLesson={startLesson} progress={progress}/>;
+function HomeView(props) {
+  return <HomePage {...props}/>;
 }
 
 function ModuleSelector({ selected, onSelect, includeAll = true }) {
@@ -397,7 +398,7 @@ function ExamSetup({ onStart }) {
   return (
     <section className="workspace">
       <div className="workspace-header">
-        <span className="eyebrow"><Target size={16} /> Simulador de examen</span>
+        <span className="eyebrow"><Target size={16} /> Prueba de conocimientos</span>
         <h1>Probá tus conocimientos sin pistas</h1>
         <p>La prueba dura 30 minutos. Las respuestas se revisan únicamente al finalizar.</p>
       </div>
@@ -590,11 +591,14 @@ function ProgressView({ progress, onReview, onReset }) {
 }
 
 export default function App() {
-  const [view, setView] = useState(() => window.location.hash.startsWith('#guia-') ? 'guide-' + window.location.hash.slice(6) : window.location.hash === '#guias' ? 'guides' : /^(#mapa-|#rg-|#roundabouts)/.test(window.location.hash) ? 'roundabouts' : 'home');
+  const [view, setView] = useState(() => window.location.hash.startsWith('#guia-') ? 'guide-' + window.location.hash.slice(6) : window.location.hash === '#ruta' ? 'learning' : ['#practice','#exam','#progress'].includes(window.location.hash) ? window.location.hash.slice(1) : window.location.hash === '#guias' ? 'guides' : /^(#mapa-|#rg-|#roundabouts)/.test(window.location.hash) ? 'roundabouts' : 'home');
   useEffect(() => {
     const sync = () => {
       const hash = window.location.hash;
       if (hash.startsWith('#guia-')) setView('guide-' + hash.slice(6));
+      else if (hash === '#ruta') setView('learning');
+      else if (['#practice','#exam','#progress'].includes(hash)) setView(hash.slice(1));
+      else if (!hash || hash === '#home') setView('home');
       else if (hash === '#guias') setView('guides');
       else if (/^(#mapa-|#rg-|#roundabouts)/.test(hash)) setView('roundabouts');
     };
@@ -713,6 +717,7 @@ export default function App() {
       />
     );
   }
+  if (view === 'learning') content = <LearningPath setView={setView} startPractice={startPractice} progress={progress} startLesson={pool => { setPracticeSession([...pool]); setView('practice-session'); setProgress(current => ({...current, practiceSessions:current.practiceSessions+1})); window.scrollTo({top:0}); }} />;
   if (view === 'guides' || view.startsWith('guide-')) content = <VisualGuides guideId={view.slice(6)} onOpen={id => { setView('guide-' + id); window.scrollTo({ top: 0 }); }} onBack={() => { setView('guides'); window.scrollTo({ top: 0 }); }} />;
   if (view === 'roundabouts') content = <Roundabouts />;
   if (view === 'practice') content = <PracticeSetup onStart={startPractice} mistakeCount={mistakeIds.length} />;
