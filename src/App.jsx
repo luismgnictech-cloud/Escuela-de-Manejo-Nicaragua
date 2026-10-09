@@ -590,16 +590,22 @@ function ProgressView({ progress, onReview, onReset }) {
 }
 
 export default function App() {
-  const [view, setView] = useState(() => window.location.hash.startsWith('#guia-') ? 'guide-' + window.location.hash.slice(6) : window.location.hash === '#guias' ? 'guides' : 'home');
+  const [view, setView] = useState(() => window.location.hash.startsWith('#guia-') ? 'guide-' + window.location.hash.slice(6) : window.location.hash === '#guias' ? 'guides' : /^(#mapa-|#rg-|#roundabouts)/.test(window.location.hash) ? 'roundabouts' : 'home');
   useEffect(() => {
     const sync = () => {
       const hash = window.location.hash;
       if (hash.startsWith('#guia-')) setView('guide-' + hash.slice(6));
       else if (hash === '#guias') setView('guides');
+      else if (/^(#mapa-|#rg-|#roundabouts)/.test(hash)) setView('roundabouts');
     };
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
   }, []);
+  useEffect(() => {
+    if (view !== 'roundabouts' || !/^(#mapa-|#rg-)/.test(window.location.hash)) return;
+    const frame = requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView());
+    return () => cancelAnimationFrame(frame);
+  }, [view]);
   const [practiceSession, setPracticeSession] = useState(null);
   const [examSession, setExamSession] = useState(null);
   const [progress, setProgress] = useStoredProgress();
