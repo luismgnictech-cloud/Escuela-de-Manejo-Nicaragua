@@ -24,6 +24,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import questions from './data/questions.json';
+import LearningPath from './LearningPath';
 import Roundabouts from './Roundabouts';
 import RoundaboutExample from './RoundaboutExample';
 import { EXAM_QUESTIONS, POINTS_PER_ANSWER, PASS_SCORE, EXAM_MINUTES, scoreExam } from './examRules';
@@ -75,6 +76,7 @@ const EMPTY_PROGRESS = {
   mistakes: {},
   examHistory: [],
   roundabouts: {},
+  mastered: {},
 };
 
 function shuffle(items) {
@@ -193,132 +195,8 @@ function Header({ view, setView, canInstall, onInstall }) {
   );
 }
 
-function HomeView({ setView, startPractice, progress, canInstall, installed, onInstall }) {
-  const totalQuestions = questions.length;
-  const accuracy = progress.totalAnswered
-    ? Math.round((progress.totalCorrect / progress.totalAnswered) * 100)
-    : 0;
-
-  return (
-    <>
-      <section className="hero">
-        <div className="hero-copy">
-          <span className="eyebrow"><ShieldCheck size={16} /> Preparación para el examen teórico</span>
-          <h1>Tu camino para conducir con confianza.</h1>
-          <p>
-            Aprendé a tu ritmo, practicá tus errores y preparate para el examen.
-            Cada respuesta es un paso más en tu aprendizaje.
-          </p>
-          <div className="hero-actions">
-            <button className="button primary" onClick={() => setView('practice')}>
-              Empezar a practicar <ChevronRight size={18} />
-            </button>
-            <button className="button secondary" onClick={() => setView('exam')}>
-              Hacer un simulacro
-            </button>
-          </div>
-        </div>
-        <div className="hero-panel">
-          <div className="learning-mascot" aria-hidden="true"><TrafficCone /></div>
-          <div className="hero-stat main-stat">
-            <span>Preguntas para aprender</span>
-            <strong>{totalQuestions}</strong>
-            <small>¡Un nuevo reto en cada práctica!</small>
-          </div>
-          <div className="mini-stats">
-            <div><strong>{MODULES.length}</strong><span>módulos</span></div>
-            <div><strong>{progress.totalAnswered}</strong><span>respondidas</span></div>
-            <div><strong>{accuracy}%</strong><span>aciertos</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="install-banner" aria-label="Instalación en Android">
-        <span className="install-banner-icon"><Smartphone /></span>
-        <div>
-          <strong>{installed ? 'Aplicación instalada' : 'Llevá la escuela de manejo en tu Android'}</strong>
-          <p>
-            {installed
-              ? 'Podés abrirla desde el menú de aplicaciones y seguir estudiando incluso sin conexión.'
-              : 'Instalala desde Chrome para abrirla como una app y usar el contenido guardado sin conexión.'}
-          </p>
-        </div>
-        {canInstall ? (
-          <button className="button primary install-button" onClick={onInstall}>
-            <Download size={18} /> Instalar aplicación
-          </button>
-        ) : !installed ? (
-          <small>En Chrome: menú ⋮ → Instalar aplicación</small>
-        ) : (
-          <span className="installed-badge"><CheckCircle2 size={17} /> Lista para usar</span>
-        )}
-      </section>
-
-      <section className="rb-home-banner">
-        <div><span className="eyebrow"><RotateCcw size={16} /> Nuevo · Práctica interactiva</span><h2>Aprendé a circular en rotondas</h2><p>Dos escenarios, tres destinos y tráfico simulado para practicar tus decisiones.</p></div>
-        <button className="button primary" onClick={() => setView('roundabouts')}>Practicar rotondas <ChevronRight size={18}/></button>
-      </section>
-      <section className="section-block">
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">Tu aprendizaje</span>
-            <h2>Elegí tu próximo reto</h2>
-          </div>
-          <p>Todos los módulos están disponibles. Elegí el tema que querés mejorar.</p>
-        </div>
-
-        <div className="learning-summary"><span><CheckCircle2 size={17}/>{progress.totalAnswered} respuestas practicadas</span><span><Medal size={17}/>{accuracy}% de aciertos</span><span><RotateCcw size={17}/>{Object.keys(progress.mistakes).length} preguntas por reforzar</span></div>
-        <div className="module-grid">
-          {MODULES.map((module, moduleIndex) => {
-            const Icon = module.icon;
-            const count = questions.filter((question) => question.module === module.id).length;
-            const mistakeCount = questions.filter((question) => question.module === module.id && progress.mistakes[question.id]).length;
-            const moduleProgress = progress.byModule[module.id] || { answered: 0, correct: 0 };
-            const percentage = moduleProgress.answered
-              ? Math.round((moduleProgress.correct / moduleProgress.answered) * 100)
-              : 0;
-            return (
-              <article className="module-card" key={module.id}>
-                <div className="module-card-top">
-                  <span className="module-icon"><Icon /></span>
-                  <div className="module-card-actions">
-                    <span className="question-count">{count} preguntas</span>
-                    <button
-                      className="module-review-button"
-                      disabled={mistakeCount === 0}
-                      aria-label={`Reforzar preguntas incorrectas de ${module.name}: ${mistakeCount} pendientes`}
-                      title={mistakeCount ? `Reforzar ${mistakeCount} preguntas incorrectas` : 'Sin preguntas incorrectas pendientes'}
-                      onClick={() => startPractice(module.id, true, true)}
-                    >
-                      <RotateCcw size={18} aria-hidden="true" />
-                      <span>{mistakeCount}</span>
-                    </button>
-                  </div>
-                </div>
-                <span className="module-step">Reto {moduleIndex + 1} · {module.short}</span>
-                <h3>{module.name}</h3>
-                
-                <p>{module.description}</p>
-                <div className="module-progress">
-                  <div><span>Rendimiento</span><strong>{percentage}%</strong></div>
-                  <div className="progress-track"><span style={{ width: `${percentage}%` }} /></div>
-                </div>
-                <button className="text-button" onClick={() => startPractice(module.id)}>
-                  Practicar este módulo <ChevronRight size={17} />
-                </button>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="feature-strip">
-        <div><CheckCircle2 /><strong>Corrección inmediata</strong><span>Con fuente y página del material.</span></div>
-        <div><Shuffle /><strong>Preguntas aleatorias</strong><span>Para evitar memorizar el orden.</span></div>
-        <div><Medal /><strong>Progreso local</strong><span>Se guarda en este navegador.</span></div>
-      </section>
-    </>
-  );
+function HomeView({ setView, startPractice, startLesson, progress }) {
+  return <LearningPath setView={setView} startPractice={startPractice} startLesson={startLesson} progress={progress}/>;
 }
 
 function ModuleSelector({ selected, onSelect, includeAll = true }) {
@@ -751,6 +629,7 @@ export default function App() {
         totalAnswered: current.totalAnswered + 1,
         totalCorrect: current.totalCorrect + (correct ? 1 : 0),
         mistakes,
+        mastered: { ...current.mastered, ...(correct ? { [question.id]: true } : {}) },
         byModule: {
           ...current.byModule,
           [question.module]: {
@@ -783,6 +662,7 @@ export default function App() {
             correct: moduleData.correct + (isCorrect ? 1 : 0),
           },
         };
+        next.mastered = { ...next.mastered, ...(isCorrect ? { [question.id]: true } : {}) };
         next.mistakes = { ...next.mistakes };
         if (isCorrect) delete next.mistakes[question.id];
         else next.mistakes[question.id] = (next.mistakes[question.id] || 0) + 1;
@@ -803,6 +683,12 @@ export default function App() {
       <HomeView
         setView={setView}
         startPractice={startPractice}
+        startLesson={(pool) => {
+          setPracticeSession([...pool]);
+          setView('practice-session');
+          setProgress(current => ({ ...current, practiceSessions: current.practiceSessions + 1 }));
+          window.scrollTo({ top: 0 });
+        }}
         progress={progress}
         canInstall={canInstall}
         installed={installed}
