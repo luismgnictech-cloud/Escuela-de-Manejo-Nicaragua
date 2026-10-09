@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import {
   Bike,
   BookOpenCheck,
@@ -26,6 +26,7 @@ import {
 import questions from './data/questions.json';
 import LearningPath from './LearningPath';
 import HomePage from './HomePage';
+import { createExam, normalizeAnswer } from './examDeck';
 import VisualGuides from './VisualGuides';
 import Roundabouts from './Roundabouts';
 import RoundaboutExample from './RoundaboutExample';
@@ -391,35 +392,8 @@ function PracticeSession({ session, onExit, recordAnswer }) {
   );
 }
 
-function ExamSetup({ onStart }) {
-  const [module, setModule] = useState('all');
-  const available = module === 'all' ? questions.length : questions.filter((q) => q.module === module).length;
-
-  return (
-    <section className="workspace">
-      <div className="workspace-header">
-        <span className="eyebrow"><Target size={16} /> Prueba de conocimientos</span>
-        <h1>Probá tus conocimientos sin pistas</h1>
-        <p>La prueba dura 30 minutos. Las respuestas se revisan únicamente al finalizar.</p>
-      </div>
-      <div className="setup-card">
-        <h2>1. Contenido</h2>
-        <ModuleSelector selected={module} onSelect={setModule} />
-
-        <h2>2. Preguntas y puntuación</h2>
-        <p>{EXAM_QUESTIONS} preguntas · {POINTS_PER_ANSWER} puntos por respuesta correcta · 100 puntos en total.</p>
-        <p>Para aprobar necesitás al menos {PASS_SCORE} puntos: 20 respuestas correctas de 25. Las respuestas incorrectas o sin responder valen 0 puntos.</p>
-        {available < EXAM_QUESTIONS && <p role="alert">Este módulo no tiene suficientes preguntas para una prueba de 25.</p>}
-
-        <button className="button primary full-width" disabled={available < EXAM_QUESTIONS} onClick={() => onStart(module)}>
-          Comenzar prueba <ChevronRight size={18} />
-        </button>
-      </div>
-    </section>
-  );
-}
-
 function ExamSession({ session, minutes, onExit, recordExam }) {
+  const [writtenAnswers, setWrittenAnswers] = useState({});
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [remaining, setRemaining] = useState(minutes * 60);
@@ -448,6 +422,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
     const details = session.map((question) => ({
       question,
       selected: answers[question.id] ?? null,
+      written: writtenAnswers[question.id] ?? null,
       correct: answers[question.id] === question.correctIndex,
     }));
     const summary = { correct, total: session.length, details, ...scoreExam(correct) };
@@ -471,14 +446,14 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
         </div>
         <div className="review-list">
           <h2>Revisión</h2>
-          {result.details.map(({ question, selected, correct }, detailIndex) => (
+          {result.details.map(({ question, selected, written, correct }, detailIndex) => (
             <article className={correct ? 'review-item correct-review' : 'review-item wrong-review'} key={question.id}>
               <div className="review-heading">
                 <span>{correct ? <CheckCircle2 /> : <XCircle />}</span>
                 <div><small>Pregunta {detailIndex + 1}</small><strong>{question.question}</strong></div>
               </div>
               {!correct && (
-                <p>Tu respuesta: {selected === null ? 'Sin responder' : question.options[selected]?.text}</p>
+                <p>Tu respuesta: {selected === null ? 'Sin responder' : written ?? question.options[selected]?.text ?? 'Respuesta incorrecta'}</p>
               )}
               <RoundaboutExample question={question} reveal />
               <p>Respuesta oficial: <strong>{question.options[question.correctIndex].text}</strong></p>
@@ -498,7 +473,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
   return (
     <section className="question-workspace">
       <div className="session-toolbar exam-toolbar">
-        <button className="back-button" onClick={onExit}>Salir</button>
+        <span className="eyebrow">Prueba · mínimo 80 puntos</span>
         <div className="session-position">{answered}/{session.length} respondidas</div>
         <div className={remaining < 60 ? 'timer urgent' : 'timer'}><Clock3 size={17} /> {min}:{sec}</div>
       </div>
@@ -508,18 +483,25 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
         <div className="question-meta"><span>{moduleMeta(question.module)?.name}</span><span>Pregunta {index + 1} · {POINTS_PER_ANSWER} puntos</span></div>
         <h1>{question.question}</h1>
         <QuestionVisual question={question} />
-        <AnswerOptions
-          question={question}
-          selected={answers[question.id] ?? null}
-          onSelect={(option) => setAnswers((current) => ({ ...current, [question.id]: option }))}
-        />
-        <div className="question-actions split-actions">
-          <button className="button secondary" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>Anterior</button>
-          {index < session.length - 1 ? (
-            <button className="button primary" onClick={() => setIndex((value) => value + 1)}>Siguiente <ChevronRight size={18} /></button>
-          ) : (
-            <button className="button primary" onClick={submit}>Finalizar examen</button>
-          )}
+        {question.examFormat === 'complete' ? <div className="exam-complete">
+          <p>Completá la respuesta con la palabra que falta:</p>
+          <blockquote>{question.sentence}</blockquote>
+          <label htmlFor="exam-word">Palabra que falta</label>
+          <input id="exam-word" key={question.id} autoComplete="off" value={writtenAnswers[question.id] || ''} onChange={event => {
+            const text = event.target.value;
+            setWrittenAnswers(current => ({...current,[question.id]:text}));
+            setAnswers(current => { const next = {...current}; if (!text.trim()) delete next[question.id]; else next[question.id] = normalizeAnswer(text) === normalizeAnswer(question.missingWord) ? question.correctIndex : -1; return next; });
+          }} />
+        </div> : question.examFormat === 'boolean' ? <div className="exam-boolean">
+          <p>¿La siguiente afirmación responde correctamente a la pregunta?</p>
+          <blockquote>{question.options[question.proposedIndex].text}</blockquote>
+          <div className="answer-list">{[true,false].map(value => {
+            const mapped = value === (question.proposedIndex === question.correctIndex) ? question.correctIndex : -1;
+            return <button key={String(value)} className={'answer-option'+(answers[question.id]===mapped?' selected':'')} onClick={()=>{setAnswers(current=>({...current,[question.id]:mapped}));setWrittenAnswers(current=>({...current,[question.id]:value?'Verdadero':'Falso'}));}}>{value?'Verdadero':'Falso'}</button>;
+          })}</div>
+        </div> : <div className="answer-list">{question.optionOrder.map((originalIndex,position)=><button key={originalIndex} className={'answer-option'+(answers[question.id]===originalIndex?' selected':'')} onClick={()=>setAnswers(current=>({...current,[question.id]:originalIndex}))}><span className="answer-letter">{String.fromCharCode(65+position)}</span><span>{question.options[originalIndex].text}</span></button>)}</div>}
+        <div className="question-actions">
+          <button className="button primary" onClick={() => { if(index < session.length-1) { setIndex(value=>value+1); window.scrollTo({top:0}); } else submit(); }}>Siguiente <ChevronRight size={18}/></button>
         </div>
       </article>
 
@@ -631,13 +613,21 @@ export default function App() {
     window.scrollTo({ top: 0 });
   };
 
-  const startExam = (module) => {
-    const pool = module === 'all' ? questions : questions.filter((question) => question.module === module);
-    if (pool.length < EXAM_QUESTIONS) return;
-    setExamSession(shuffle(pool).slice(0, EXAM_QUESTIONS));
-    setView('exam-session');
+  const examStarting = useRef(false);
+  const [examRemaining, setExamRemaining] = useState(null);
+  const startExam = () => {
+    const next = createExam(questions);
+    setExamRemaining(next.remaining);
+    setExamSession(next.questions);
+    setView(next.questions ? 'exam-session' : 'exam-empty');
     window.scrollTo({ top: 0 });
   };
+  useEffect(() => {
+    if (view === 'exam' && !examStarting.current) {
+      examStarting.current = true;
+      startExam();
+    } else if (view !== 'exam') examStarting.current = false;
+  }, [view]);
 
   const recordAnswer = (question, correct) => {
     setProgress((current) => {
@@ -724,9 +714,10 @@ export default function App() {
   if (view === 'practice-session' && practiceSession) {
     content = <PracticeSession session={practiceSession} onExit={() => setView('practice')} recordAnswer={recordAnswer} />;
   }
-  if (view === 'exam') content = <ExamSetup onStart={startExam} />;
+  if (view === 'exam') content = <p role="status">Preparando tu prueba…</p>;
+  if (view === 'exam-empty') content = <section className="workspace"><div className="workspace-header"><h1>Completaste las preguntas disponibles</h1><p>Quedan {examRemaining} preguntas inéditas. Necesitamos 25 para iniciar otra prueba sin repetir preguntas. Podés seguir practicando y reforzando tus errores.</p><button className="button primary" onClick={() => setView('practice')}>Ir a practicar</button></div></section>;
   if (view === 'exam-session' && examSession) {
-    content = <ExamSession session={examSession} minutes={EXAM_MINUTES} onExit={() => setView('exam')} recordExam={recordExam} />;
+    content = <ExamSession key={examSession.map(q=>q.id).join('-')} session={examSession} minutes={EXAM_MINUTES} onExit={() => setView('exam')} recordExam={recordExam} />;
   }
   if (view === 'progress') {
     content = <ProgressView progress={progress} onReview={() => startPractice('mistakes', true)} onReset={resetProgress} />;

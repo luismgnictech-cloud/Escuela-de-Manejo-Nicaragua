@@ -36,3 +36,9 @@ button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible 
 }
 @media(max-width:430px) { .drive-modules { grid-template-columns:1fr; }.drive-module-art { height:11rem; }.drive-levels { grid-template-columns:1fr; }.drive-level h3 { margin-top:1.3rem; }.drive-level-bottom { flex-direction:row; }.drive-hero-visual { min-height:24rem; }.drive-goal strong { font-size:1.15rem; }.drive-goal small { line-height:1.5; display:block; }.drive-kicker { font-size:.58rem; letter-spacing:.12em; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation:none!important; transition:none!important; } }
+
+.exam-complete blockquote,.exam-boolean blockquote { margin:1rem 0; padding:1rem; border-left:4px solid var(--yellow); background:#f2f3e9; line-height:1.7; }
+.exam-complete label { display:block; font-weight:600; margin-bottom:.6rem; }
+.exam-complete input { width:100%; padding:.9rem; border:1px solid #8da584; border-radius:.7rem; background:#fff; font-size:1rem; }
+.exam-complete input:focus-visible { outline:3px solid #a8791c; outline-offset:3px; }
+.exam-toolbar { flex-wrap:wrap; }
