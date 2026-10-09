@@ -11,7 +11,13 @@ export function createExam(pool, storage = localStorage, random = Math.random) {
   const available = pool.filter(q => !used.has(q.id));
   if (available.length < EXAM_QUESTIONS) return { questions:null, remaining:available.length };
   const picked = randomized(available,random).slice(0,EXAM_QUESTIONS);
-  const formatted = picked.map(q=>({...q,examFormat:'development'}));
+  const formats = randomized([...Array(10).fill('multiple'), ...Array(5).fill('boolean'), ...Array(10).fill('development')], random);
+  const formatted = picked.map((q,index)=>{
+    if(formats[index] !== 'boolean') return {...q,examFormat:formats[index]};
+    const candidates=q.options.map((option,i)=>({text:option.text,correct:i===q.correctIndex})).filter(option=>! /^(todas|ninguna|ambas)\b.*anteriores/i.test(option.text));
+    const statement=candidates[Math.floor(random()*candidates.length)];
+    return {...q,examFormat:'boolean',statement:statement.text,statementCorrect:statement.correct};
+  });
   storage.setItem(KEY,JSON.stringify([...used,...picked.map(q=>q.id)]));
   return {questions:formatted,remaining:available.length-EXAM_QUESTIONS};
 }

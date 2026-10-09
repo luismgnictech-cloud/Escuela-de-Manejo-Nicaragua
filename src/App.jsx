@@ -419,10 +419,12 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
   }, [remaining]);
 
   const submit = () => {
-    const details = session.map(question => ({
-      question, selected:null, written:writtenAnswers[question.id] || '',
-      ...evaluateDevelopment(question,writtenAnswers[question.id] || ''),
-    }));
+    const details = session.map(question => {
+      if(question.examFormat === 'development') return {question, selected:null, written:writtenAnswers[question.id] || '', ...evaluateDevelopment(question,writtenAnswers[question.id] || '')};
+      const selected=answers[question.id];
+      const correct=selected !== undefined && (question.examFormat === 'boolean' ? selected === question.statementCorrect : selected === question.correctIndex);
+      return {question,selected,written:selected === undefined ? '' : question.examFormat === 'boolean' ? (selected ? 'Verdadero' : 'Falso') : question.options[selected].text,correct,status:correct ? 'correct' : 'incorrect',reason:selected === undefined ? 'Sin respuesta' : correct ? 'Respuesta correcta.' : 'Respuesta incorrecta.'};
+    });
     const correct=details.filter(detail=>detail.status==='correct').length;
     const pending=details.filter(detail=>detail.status==='pending').length;
     const summary = { correct, pending, total:session.length, details, ...scoreExam(correct) };
@@ -451,7 +453,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
             <article className={status === 'pending' ? 'review-item pending-review' : correct ? 'review-item correct-review' : 'review-item wrong-review'} key={question.id}>
               <div className="review-heading">
                 <span>{status === 'pending' ? <Clock3 /> : correct ? <CheckCircle2 /> : <XCircle />}</span>
-                <div><small>Pregunta {detailIndex + 1}</small><strong>{question.question}</strong></div>
+                <div><small>Pregunta {detailIndex + 1}</small><strong>{question.question}</strong>{question.examFormat === 'boolean' && <p>Afirmación: {question.statement}</p>}</div>
               </div>
               <p>Tu respuesta: {written || 'Sin responder'}</p>
               <RoundaboutExample question={question} reveal />
@@ -482,7 +484,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
         <div className="question-meta"><span>{moduleMeta(question.module)?.name}</span><span>Pregunta {index + 1} · {POINTS_PER_ANSWER} puntos</span></div>
         <h1>{question.question.replace(/de (?:las|los) abajo mencionad[ao]s|de (?:estos|estas|los siguientes|las siguientes)/gi, '').replace(/\s+/g, ' ')}</h1>
         <QuestionVisual question={question} />
-        <div className="exam-complete">
+        {question.examFormat === 'multiple' ? <AnswerOptions question={question} selected={answers[question.id]} onSelect={value=>setAnswers(current=>({...current,[question.id]:value}))}/> : question.examFormat === 'boolean' ? <div className="answer-list"><p>¿Es correcta esta respuesta a la pregunta?</p><strong>{question.statement}</strong>{[true,false].map(value=><button key={String(value)} className={'answer-option' + (answers[question.id] === value ? ' selected' : '')} onClick={()=>setAnswers(current=>({...current,[question.id]:value}))}>{value ? 'Verdadero' : 'Falso'}</button>)}</div> : <div className="exam-complete">
           <label htmlFor="exam-development">Escribí tu respuesta</label>
           <textarea id="exam-development" key={question.id} rows={6} autoComplete="off" placeholder="Explicá tu respuesta con tus propias palabras…" value={writtenAnswers[question.id] || ''} onChange={event => {
             const text=event.target.value;
@@ -490,7 +492,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
             setAnswers(current=>{const next={...current};if(text.trim())next[question.id]=true;else delete next[question.id];return next;});
           }}/>
           <small>Las respuestas se evalúan al finalizar. Las redacciones no reconocidas quedan pendientes de revisión.</small>
-        </div>
+        </div>}
         <div className="question-actions">
           <button className="button primary" onClick={() => { if(index < session.length-1) { setIndex(value=>value+1); window.scrollTo({top:0}); } else submit(); }}>Siguiente <ChevronRight size={18}/></button>
         </div>
