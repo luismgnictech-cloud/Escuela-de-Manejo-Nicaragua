@@ -480,7 +480,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
 
       <article className="question-card">
         <div className="question-meta"><span>{moduleMeta(question.module)?.name}</span><span>Pregunta {index + 1} · {POINTS_PER_ANSWER} puntos</span></div>
-        <h1>{question.question}</h1>
+        <h1>{question.question.replace(/de (?:las|los) abajo mencionad[ao]s|de (?:estos|estas|los siguientes|las siguientes)/gi, '').replace(/\s+/g, ' ')}</h1>
         <QuestionVisual question={question} />
         <div className="exam-complete">
           <label htmlFor="exam-development">Escribí tu respuesta</label>
