@@ -204,10 +204,10 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
       <section className="hero">
         <div className="hero-copy">
           <span className="eyebrow"><ShieldCheck size={16} /> Preparación para el examen teórico</span>
-          <h1>Estudiá, practicá y medí tu progreso antes del examen.</h1>
+          <h1>Tu camino para conducir con confianza.</h1>
           <p>
-            Una plataforma móvil con preguntas oficiales organizadas por tema, práctica inmediata,
-            simulacros y revisión de errores.
+            Aprendé a tu ritmo, practicá tus errores y preparate para el examen.
+            Cada respuesta es un paso más en tu aprendizaje.
           </p>
           <div className="hero-actions">
             <button className="button primary" onClick={() => setView('practice')}>
@@ -219,10 +219,11 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
           </div>
         </div>
         <div className="hero-panel">
+          <div className="learning-mascot" aria-hidden="true"><TrafficCone /></div>
           <div className="hero-stat main-stat">
-            <span>Banco disponible</span>
+            <span>Preguntas para aprender</span>
             <strong>{totalQuestions}</strong>
-            <small>preguntas verificadas</small>
+            <small>¡Un nuevo reto en cada práctica!</small>
           </div>
           <div className="mini-stats">
             <div><strong>{MODULES.length}</strong><span>módulos</span></div>
@@ -260,14 +261,15 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
       <section className="section-block">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">Temario completo</span>
-            <h2>Elegí un módulo</h2>
+            <span className="eyebrow">Tu aprendizaje</span>
+            <h2>Elegí tu próximo reto</h2>
           </div>
-          <p>Las respuestas correctas se toman de las opciones resaltadas en los documentos fuente.</p>
+          <p>Todos los módulos están disponibles. Elegí el tema que querés mejorar.</p>
         </div>
 
+        <div className="learning-summary"><span><CheckCircle2 size={17}/>{progress.totalAnswered} respuestas practicadas</span><span><Medal size={17}/>{accuracy}% de aciertos</span><span><RotateCcw size={17}/>{Object.keys(progress.mistakes).length} preguntas por reforzar</span></div>
         <div className="module-grid">
-          {MODULES.map((module) => {
+          {MODULES.map((module, moduleIndex) => {
             const Icon = module.icon;
             const count = questions.filter((question) => question.module === module.id).length;
             const mistakeCount = questions.filter((question) => question.module === module.id && progress.mistakes[question.id]).length;
@@ -293,8 +295,9 @@ function HomeView({ setView, startPractice, progress, canInstall, installed, onI
                     </button>
                   </div>
                 </div>
+                <span className="module-step">Reto {moduleIndex + 1} · {module.short}</span>
                 <h3>{module.name}</h3>
-                <span className="module-short">{module.short}</span>
+                
                 <p>{module.description}</p>
                 <div className="module-progress">
                   <div><span>Rendimiento</span><strong>{percentage}%</strong></div>
