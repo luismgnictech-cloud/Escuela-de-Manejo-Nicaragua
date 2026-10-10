@@ -35,3 +35,6 @@ html{scroll-behavior:smooth}
 .ts-group{padding-top:1.5rem;border-top:1px solid #d6e3d8}.ts-group h3{font-size:1.5rem}.ts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.ts-card{border:1px solid #d6e3d8;border-radius:1.2rem;background:#fff;overflow:hidden}.ts-card>img{display:block;width:100%;height:12rem;object-fit:contain;padding:1rem;background:#f0f4ed;box-sizing:border-box}.ts-card>div{padding:1.2rem}.ts-card h4{font-size:1.1rem;line-height:1.4;margin:.5rem 0}.ts-card p{font-size:.9rem}.ts-card small{color:#68766e;font-size:.75rem}.ts-prompt{font-weight:700}.ts-source a{color:#184b40;font-weight:700}@media(max-width:991px){.ts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.ts-grid{grid-template-columns:1fr}}
 
 .ts-manual-title{font-size:1.25rem;margin:2rem 0 1rem;padding-top:1.3rem;border-top:1px solid #d6e3d8}
+.ts-card>.ts-illustration{display:block;width:100%;height:12rem;padding:1rem;box-sizing:border-box;background:#f0f4ed}.ts-subgroup{margin:1.75rem 0 2.5rem}.ts-subgroup>h4{font-size:1.2rem;margin-bottom:1rem}.ts-note{font-size:.875rem;color:#57675f;max-width:85ch}
+
+.ts-card h5{font-size:1.1rem;line-height:1.4;margin:.5rem 0}
