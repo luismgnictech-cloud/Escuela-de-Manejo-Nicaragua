@@ -38,3 +38,6 @@ html{scroll-behavior:smooth}
 .ts-card>.ts-illustration{display:block;width:100%;height:12rem;padding:1rem;box-sizing:border-box;background:#f0f4ed}.ts-subgroup{margin:1.75rem 0 2.5rem}.ts-subgroup>h4{font-size:1.2rem;margin-bottom:1rem}.ts-note{font-size:.875rem;color:#57675f;max-width:85ch}
 
 .ts-card h5{font-size:1.1rem;line-height:1.4;margin:.5rem 0}
+/* Give the refined artwork enough room to keep small features legible. */
+.ts-card>.ts-illustration{height:15rem;padding:1.25rem;background:#f6f7f4}.ts-card .ts-illustration text{font-family:Arial,Helvetica,sans-serif}.ts-card{border-color:#dee5df}.ts-card>div{padding:1.3rem}.ts-card small{display:block;line-height:1.5}.ts-card .eyebrow{font-size:.6875rem;letter-spacing:.09em}
+@media(max-width:600px){.ts-card>.ts-illustration{height:16rem}}
