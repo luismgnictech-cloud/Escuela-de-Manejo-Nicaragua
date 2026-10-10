@@ -37,12 +37,12 @@ function Hand({x,y,rotate=0}){return <g transform={`translate(${x} ${y}) rotate(
 export function TrafficAgent({id}){const stop=id==='agent-stop',go=id==='agent-go';return <>
  <ellipse cx="120" cy="215" rx="58" ry="5" fill="#dce3e5"/>
  <path d="M105 154H119L117 204H100ZM122 154H139L143 204H128Z" fill="#24364b"/><path d="M100 201H117V214H94Q92 208 100 201ZM129 201H143L150 210V214H129Z" fill="#17212c"/>
- <path d="M102 85Q120 76 138 85L146 149Q120 158 95 149Z" fill="#2d4869"/>
+ <path d={go?'M110 82Q125 80 133 89L139 151H108Z':'M102 85Q120 76 138 85L146 149Q120 158 95 149Z'} fill="#2d4869"/>
  {line(stop?'M103 93L 70 104L 60  70M137 93L170 104L180  70':go?'M103 93L80 96L75 55M137 94L154 142':'M103 93L 80  70L82 40M137 94L178 143',16,'#2d4869')}
- <path d="M106 82H114L120 102L126 82H136L143 149H99Z" fill="#ccdf48"/><path d="M110 88L107 144M132 88L136 144" stroke="#eef2e5" strokeWidth="5"/><rect x="101" y="124" width="39" height="6" fill="#eef2e5"/><rect x="115" y="151" width="12" height="5" rx="1" fill="#9babb8"/>
+ <path d={go?'M114 83H123L132 96L136 149H110Z':'M106 82H114L120 102L126 82H136L143 149H99Z'} fill="#ccdf48"/><path d={go?'M119 89L122 144':'M110 88L107 144M132 88L136 144'} stroke="#eef2e5" strokeWidth="5"/><rect x={go?112:101} y="124" width={go?23:39} height="6" fill="#eef2e5"/><rect x="115" y="151" width="12" height="5" rx="1" fill="#9babb8"/>
  <path d="M112 74V84L120 92L129 83V74" fill="#cc9871"/>
  <ellipse cx="120" cy="60" rx="17" ry="21" fill="#dcaa82"/>{go&&<path d="M134 53L145 62L135 67" fill="#dcaa82"/>}
- <path d="M101 49Q120  30 139 49L143 57H97Z" fill="#24364b"/><path d="M100 49H140V55H100Z" fill="#456285"/><path d="M103 55H139L147 61H103Z" fill="#17212c"/><circle cx="120" cy="46" r="3" fill="#d5b661"/>
+ <path d={go?'M104 47Q115  30 136 47L141 55H101Z':'M101 49Q120 30 139 49L143 57H97Z'} fill="#24364b"/><path d="M100 49H140V55H100Z" fill="#456285"/><path d={go?'M109 55H144L156 61H112Z':'M103 55H139L147 61H103Z'} fill="#17212c"/><circle cx="120" cy="46" r="3" fill="#d5b661"/>
  {stop?<><Hand x={60} y={69} rotate={-10}/><Hand x={180} y={69} rotate={10}/></>:go?<Hand x={75} y={54}/>:<><Hand x={82} y={39}/><Hand x={179} y={143} rotate={ 90}/></>}
  </>}
 export function ManualGesture({n}){return <>
