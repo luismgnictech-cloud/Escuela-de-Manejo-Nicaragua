@@ -5,7 +5,8 @@
     "title": "Curva cerrada a la derecha",
     "description": "Advierte una curva cerrada hacia la derecha. Reducí la velocidad antes de entrar en la curva.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-001.webp"
   },
   {
     "id": "manual-002",
@@ -13,7 +14,8 @@
     "title": "Curva a la derecha",
     "description": "Advierte una curva hacia la derecha. Adaptá la velocidad y mantené tu carril.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-002.webp"
   },
   {
     "id": "manual-003",
@@ -21,7 +23,8 @@
     "title": "Doble curva cerrada",
     "description": "Advierte dos curvas cerradas consecutivas. Prepará la maniobra antes de la primera curva.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-003.webp"
   },
   {
     "id": "manual-004",
@@ -29,7 +32,8 @@
     "title": "Curva doble",
     "description": "Advierte dos curvas consecutivas en sentidos opuestos.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-004.webp"
   },
   {
     "id": "manual-005",
@@ -37,7 +41,8 @@
     "title": "Camino sinuoso",
     "description": "Advierte varias curvas consecutivas. Mantené una velocidad que permita controlar el vehículo.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-005.webp"
   },
   {
     "id": "manual-006",
@@ -45,7 +50,8 @@
     "title": "Curva peligrosa",
     "description": "El delineador orienta el recorrido en una curva peligrosa. Seguí la dirección indicada.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-006.webp"
   },
   {
     "id": "manual-007",
@@ -53,7 +59,8 @@
     "title": "Curva cerrada: velocidad de referencia",
     "description": "La placa indica una velocidad de referencia para afrontar la curva señalizada; el número es un ejemplo del manual.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-007.webp"
   },
   {
     "id": "manual-008",
@@ -61,7 +68,8 @@
     "title": "Peligro de vuelco",
     "description": "Advierte riesgo de vuelco. Extremá la precaución, especialmente con vehículos altos o cargados.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-008.webp"
   },
   {
     "id": "manual-009",
@@ -69,7 +77,8 @@
     "title": "Cruce de caminos",
     "description": "Advierte un cruce de caminos. Observá los accesos y la señalización de prioridad.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-009.webp"
   },
   {
     "id": "manual-010",
@@ -77,7 +86,8 @@
     "title": "Intersección en T",
     "description": "Advierte una intersección en forma de T.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-010.webp"
   },
   {
     "id": "manual-011",
@@ -85,7 +95,8 @@
     "title": "Intersección en Y",
     "description": "Advierte una intersección en forma de Y.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-011.webp"
   },
   {
     "id": "manual-012",
@@ -93,7 +104,8 @@
     "title": "Alto próximo",
     "description": "Advierte que encontrarás una señal de alto más adelante.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-012.webp"
   },
   {
     "id": "manual-013",
@@ -101,7 +113,8 @@
     "title": "Semáforo próximo",
     "description": "Advierte un cruce regulado por semáforo más adelante.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-013.webp"
   },
   {
     "id": "manual-014",
@@ -109,7 +122,8 @@
     "title": "Rotonda próxima",
     "description": "Advierte la proximidad de una rotonda.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-014.webp"
   },
   {
     "id": "manual-015",
@@ -117,7 +131,8 @@
     "title": "Reducción de carriles",
     "description": "Advierte que se reduce el número de carriles. Anticipá la incorporación y señalizá la maniobra.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-015.webp"
   },
   {
     "id": "manual-016",
@@ -125,7 +140,8 @@
     "title": "Ancho libre",
     "description": "Advierte el ancho libre disponible en el tramo. La medida ilustrada es la del ejemplo del manual.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-016.webp"
   },
   {
     "id": "manual-017",
@@ -133,7 +149,8 @@
     "title": "Puente angosto",
     "description": "Advierte un puente angosto. Reducí la velocidad y observá el tránsito que viene de frente.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-017.webp"
   },
   {
     "id": "manual-018",
@@ -141,7 +158,8 @@
     "title": "Altura máxima disponible",
     "description": "Advierte la altura libre disponible. Comprobá la altura total del vehículo y su carga.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-018.webp"
   },
   {
     "id": "manual-019",
@@ -149,7 +167,8 @@
     "title": "Pendiente peligrosa",
     "description": "Advierte una pendiente pronunciada. Adaptá la velocidad y la marcha antes del descenso.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-019.webp"
   },
   {
     "id": "manual-020",
@@ -157,7 +176,8 @@
     "title": "Pendiente peligrosa para camiones",
     "description": "Advierte una pendiente que requiere especial precaución para camiones.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-020.webp"
   },
   {
     "id": "manual-021",
@@ -165,7 +185,8 @@
     "title": "Superficie deslizante",
     "description": "Advierte que la superficie puede resultar deslizante. Evitá maniobras bruscas.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-021.webp"
   },
   {
     "id": "manual-022",
@@ -173,7 +194,8 @@
     "title": "Zona de derrumbes",
     "description": "Advierte riesgo de caída de piedras o derrumbes.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-022.webp"
   },
   {
     "id": "manual-023",
@@ -181,7 +203,8 @@
     "title": "Presencia de personas con discapacidad",
     "description": "Advierte la presencia de personas con discapacidad en el entorno.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-023.webp"
   },
   {
     "id": "manual-024",
@@ -189,7 +212,8 @@
     "title": "Cruce peatonal",
     "description": "Advierte la proximidad de un cruce peatonal.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-024.webp"
   },
   {
     "id": "manual-025",
@@ -197,7 +221,8 @@
     "title": "Escuela",
     "description": "Identifica la presencia de una escuela. Prestá atención a niñas, niños y peatones.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-025.webp"
   },
   {
     "id": "manual-026",
@@ -205,7 +230,8 @@
     "title": "Reductor de velocidad",
     "description": "Advierte un reductor de velocidad. Disminuí la velocidad antes de alcanzarlo.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-026.webp"
   },
   {
     "id": "manual-027",
@@ -213,7 +239,8 @@
     "title": "Presencia de ganado",
     "description": "Advierte la posible presencia o cruce de ganado.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-027.webp"
   },
   {
     "id": "manual-028",
@@ -221,7 +248,8 @@
     "title": "Salida de camiones",
     "description": "Advierte un acceso por el que pueden incorporarse camiones.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-028.webp"
   },
   {
     "id": "manual-029",
@@ -229,7 +257,8 @@
     "title": "Doble circulación",
     "description": "Advierte circulación de vehículos en ambos sentidos.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-029.webp"
   },
   {
     "id": "manual-030",
@@ -237,7 +266,8 @@
     "title": "Delineadores preventivos",
     "description": "El delineador ayuda a reconocer el borde y los obstáculos de la vía.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-030.webp"
   },
   {
     "id": "manual-031",
@@ -245,7 +275,8 @@
     "title": "Zona escolar próxima",
     "description": "Advierte una zona escolar próxima; la placa muestra la distancia de aproximación.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Preventiva"
+    "kind": "Preventiva",
+    "image": "images/signals/manual-031.webp"
   },
   {
     "id": "manual-032",
@@ -253,7 +284,8 @@
     "title": "Ruta provisional",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-032.webp"
   },
   {
     "id": "manual-033",
@@ -261,7 +293,8 @@
     "title": "Fin del desvío",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-033.webp"
   },
   {
     "id": "manual-034",
@@ -269,7 +302,8 @@
     "title": "Desvío",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-034.webp"
   },
   {
     "id": "manual-035",
@@ -277,7 +311,8 @@
     "title": "Delineadores de obras",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-035.webp"
   },
   {
     "id": "manual-036",
@@ -285,7 +320,8 @@
     "title": "Carretera en construcción",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-036.webp"
   },
   {
     "id": "manual-037",
@@ -293,7 +329,8 @@
     "title": "Desvío próximo",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-037.webp"
   },
   {
     "id": "manual-038",
@@ -301,7 +338,8 @@
     "title": "Camino cerrado",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-038.webp"
   },
   {
     "id": "manual-039",
@@ -309,7 +347,8 @@
     "title": "Abanderado",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-039.webp"
   },
   {
     "id": "manual-040",
@@ -317,7 +356,8 @@
     "title": "Puente en reparación",
     "description": "Señalización temporal: informa o advierte sobre obras y cambios de circulación. Seguí las indicaciones del lugar y del personal de control.",
     "source": "Referencia: Manual del Conductor · PDF, página 32",
-    "kind": "Temporal"
+    "kind": "Temporal",
+    "image": "images/signals/manual-040.webp"
   },
   {
     "id": "manual-041",
@@ -325,7 +365,8 @@
     "title": "Alto",
     "description": "Detenete completamente; continuá cuando la vía esté libre.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-041.webp"
   },
   {
     "id": "manual-042",
@@ -333,7 +374,8 @@
     "title": "Ceda el paso",
     "description": "Cedé el paso a quienes circulan por la vía a la que te incorporás.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-042.webp"
   },
   {
     "id": "manual-043",
@@ -341,7 +383,8 @@
     "title": "Velocidad máxima",
     "description": "El número indica el límite señalado para ese tramo.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-043.webp"
   },
   {
     "id": "manual-044",
@@ -357,7 +400,8 @@
     "title": "No hay paso",
     "description": "Prohíbe continuar por el acceso señalizado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-045.webp"
   },
   {
     "id": "manual-046",
@@ -365,7 +409,8 @@
     "title": "No virar a la derecha",
     "description": "Prohíbe el giro a la derecha.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-046.webp"
   },
   {
     "id": "manual-047",
@@ -373,7 +418,8 @@
     "title": "No virar a la izquierda",
     "description": "Prohíbe girar a la izquierda.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-047.webp"
   },
   {
     "id": "manual-048",
@@ -381,7 +427,8 @@
     "title": "No virar en U",
     "description": "Prohíbe realizar un retorno.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-048.webp"
   },
   {
     "id": "manual-049",
@@ -389,7 +436,8 @@
     "title": "Se permite virar en U",
     "description": "Indica un punto donde se permite la maniobra, sujeto a las condiciones de circulación.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-049.webp"
   },
   {
     "id": "manual-050",
@@ -397,7 +445,8 @@
     "title": "Doble giro a la izquierda",
     "description": "Señala los carriles y movimientos de giro a la izquierda.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-050.webp"
   },
   {
     "id": "manual-051",
@@ -405,7 +454,8 @@
     "title": "Ingreso controlado",
     "description": "Identifica un acceso con regulación de circulación.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-051.webp"
   },
   {
     "id": "manual-052",
@@ -413,7 +463,8 @@
     "title": "Mantenga su derecha",
     "description": "Indica circular por el lado señalado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-052.webp"
   },
   {
     "id": "manual-053",
@@ -421,7 +472,8 @@
     "title": "No camiones",
     "description": "Prohíbe el acceso de camiones.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-053.webp"
   },
   {
     "id": "manual-054",
@@ -429,7 +481,8 @@
     "title": "Camiones: carril derecho",
     "description": "Indica el carril destinado a la circulación de camiones.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-054.webp"
   },
   {
     "id": "manual-055",
@@ -437,7 +490,8 @@
     "title": "Tránsito lento: carril derecho",
     "description": "Indica que el tránsito lento debe usar el carril derecho.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-055.webp"
   },
   {
     "id": "manual-056",
@@ -445,7 +499,8 @@
     "title": "Peatones por la izquierda",
     "description": "Orienta la circulación peatonal por el lado indicado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-056.webp"
   },
   {
     "id": "manual-057",
@@ -453,7 +508,8 @@
     "title": "No peatones",
     "description": "Prohíbe el tránsito peatonal por el lugar señalizado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-057.webp"
   },
   {
     "id": "manual-058",
@@ -461,7 +517,8 @@
     "title": "No ciclistas",
     "description": "Prohíbe la circulación de bicicletas.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-058.webp"
   },
   {
     "id": "manual-059",
@@ -469,7 +526,8 @@
     "title": "No estacionar",
     "description": "Prohíbe estacionar en la zona señalizada.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-059.webp"
   },
   {
     "id": "manual-061",
@@ -477,7 +535,8 @@
     "title": "Ancho máximo",
     "description": "No ingresés si el vehículo supera el ancho indicado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-061.webp"
   },
   {
     "id": "manual-062",
@@ -485,7 +544,8 @@
     "title": "Altura máxima",
     "description": "No ingresés si el vehículo supera la altura indicada.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-062.webp"
   },
   {
     "id": "manual-063",
@@ -493,7 +553,8 @@
     "title": "No adelantar",
     "description": "Prohíbe adelantar en el tramo señalizado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-063.webp"
   },
   {
     "id": "manual-064",
@@ -501,7 +562,8 @@
     "title": "Camiones: no adelantar",
     "description": "Prohíbe el adelantamiento de camiones en el tramo señalizado.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-064.webp"
   },
   {
     "id": "manual-065",
@@ -509,7 +571,8 @@
     "title": "Retén policial",
     "description": "Anuncia un punto de control policial; seguí las instrucciones del agente.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-065.webp"
   },
   {
     "id": "manual-066",
@@ -517,7 +580,8 @@
     "title": "Use cinturón de seguridad",
     "description": "Indica la obligación de utilizar el cinturón.",
     "source": "Referencia: Manual del Conductor · PDF, página 33",
-    "kind": "Reglamentaria"
+    "kind": "Reglamentaria",
+    "image": "images/signals/manual-066.webp"
   },
   {
     "id": "manual-067",
@@ -525,7 +589,8 @@
     "title": "Teléfono",
     "description": "Identifica un servicio telefónico.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-067.webp"
   },
   {
     "id": "manual-068",
@@ -533,7 +598,8 @@
     "title": "Gasolinera",
     "description": "Identifica un punto de abastecimiento de combustible.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-068.webp"
   },
   {
     "id": "manual-069",
@@ -541,7 +607,8 @@
     "title": "Servicio de salud y emergencias",
     "description": "Identifica servicios de salud o atención de emergencias.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-069.webp"
   },
   {
     "id": "manual-070",
@@ -549,7 +616,8 @@
     "title": "Estacionamiento",
     "description": "Identifica un lugar destinado al estacionamiento.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-070.webp"
   },
   {
     "id": "manual-071",
@@ -557,7 +625,8 @@
     "title": "Infraestructura accesible",
     "description": "Identifica infraestructura para personas con discapacidad.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-071.webp"
   },
   {
     "id": "manual-072",
@@ -565,7 +634,8 @@
     "title": "Servicios médicos",
     "description": "Identifica servicios de atención médica.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-072.webp"
   },
   {
     "id": "manual-073",
@@ -573,7 +643,8 @@
     "title": "Campamento",
     "description": "Identifica un área de campamento.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-073.webp"
   },
   {
     "id": "manual-074",
@@ -581,7 +652,8 @@
     "title": "Restaurante",
     "description": "Identifica un servicio de alimentación.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-074.webp"
   },
   {
     "id": "manual-075",
@@ -589,7 +661,8 @@
     "title": "Parada de autobuses",
     "description": "Identifica un punto de parada del transporte de pasajeros.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-075.webp"
   },
   {
     "id": "manual-076",
@@ -597,7 +670,8 @@
     "title": "Aeropuerto",
     "description": "Indica un aeropuerto o la dirección hacia este servicio.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": "Informativa"
+    "kind": "Informativa",
+    "image": "images/signals/manual-076.webp"
   },
   {
     "id": "manual-077",
@@ -605,7 +679,8 @@
     "title": "Conductor: giro a la izquierda",
     "description": "Brazo extendido horizontalmente hacia la izquierda: comunica un giro a la izquierda. El gesto se aplica también a motociclistas.",
     "source": "Referencia: Manual del Conductor · PDF, página 26",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-077.webp"
   },
   {
     "id": "manual-078",
@@ -613,7 +688,8 @@
     "title": "Conductor: giro a la derecha",
     "description": "Brazo extendido con el antebrazo hacia arriba: comunica un giro a la derecha. El gesto se aplica también a motociclistas.",
     "source": "Referencia: Manual del Conductor · PDF, página 26",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-078.webp"
   },
   {
     "id": "manual-079",
@@ -621,7 +697,8 @@
     "title": "Conductor: reducir la velocidad o detenerse",
     "description": "Brazo extendido con el antebrazo hacia abajo: comunica reducción de velocidad o detención. El gesto se aplica también a motociclistas.",
     "source": "Referencia: Manual del Conductor · PDF, página 26",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-079.webp"
   },
   {
     "id": "manual-083",
@@ -629,7 +706,8 @@
     "title": "Semáforo: luz roja",
     "description": "Indica detenerse.",
     "source": "Referencia: Manual del Conductor · PDF, página 27",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-083.webp"
   },
   {
     "id": "manual-084",
@@ -637,7 +715,8 @@
     "title": "Semáforo: luz amarilla",
     "description": "Indica prepararse para detenerse.",
     "source": "Referencia: Manual del Conductor · PDF, página 27",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-084.webp"
   },
   {
     "id": "manual-085",
@@ -645,7 +724,8 @@
     "title": "Semáforo: luz verde",
     "description": "Permite continuar si la intersección está libre de peatones y vehículos.",
     "source": "Referencia: Manual del Conductor · PDF, página 27",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-085.webp"
   },
   {
     "id": "manual-086",
@@ -653,7 +733,9 @@
     "title": "Luz roja intermitente",
     "description": "Requiere detenerse completamente y continuar cuando no exista peligro.",
     "source": "Referencia: Manual del Conductor · PDF, página 27",
-    "kind": null
+    "kind": null,
+    "stillImage": "images/signals/manual-086-still.webp",
+    "image": "images/signals/manual-086.webp"
   },
   {
     "id": "manual-087",
@@ -661,7 +743,9 @@
     "title": "Luz amarilla intermitente",
     "description": "Indica reducir la velocidad y continuar con precaución.",
     "source": "Referencia: Manual del Conductor · PDF, página 27",
-    "kind": null
+    "kind": null,
+    "stillImage": "images/signals/manual-087-still.webp",
+    "image": "images/signals/manual-087.webp"
   },
   {
     "id": "manual-088",
@@ -669,7 +753,8 @@
     "title": "Línea amarilla continua y discontinua",
     "description": "La posibilidad de adelantar depende de la línea del lado por el que circulás; la continua no permite cruzarla.",
     "source": "Referencia: Manual del Conductor · PDF, página 28",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-088.webp"
   },
   {
     "id": "manual-089",
@@ -677,7 +762,8 @@
     "title": "Línea blanca continua",
     "description": "Delimita carriles del mismo sentido; no debés cruzarla para cambiar de carril.",
     "source": "Referencia: Manual del Conductor · PDF, página 28",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-089.webp"
   },
   {
     "id": "manual-090",
@@ -685,7 +771,8 @@
     "title": "Línea blanca discontinua",
     "description": "Permite cambiar de carril cuando la maniobra es segura y se respeta la prioridad.",
     "source": "Referencia: Manual del Conductor · PDF, página 28",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-090.webp"
   },
   {
     "id": "manual-091",
@@ -701,7 +788,8 @@
     "title": "Paso peatonal: marcas",
     "description": "Identifica la zona destinada al cruce de peatones.",
     "source": "Referencia: Manual del Conductor · PDF, página 28",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-092.webp"
   },
   {
     "id": "manual-093",
@@ -709,7 +797,8 @@
     "title": "Marca de ceda el paso",
     "description": "La marca sobre el pavimento complementa la obligación de ceder el paso.",
     "source": "Referencia: Manual del Conductor · PDF, página 28",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-093.webp"
   },
   {
     "id": "manual-094",
@@ -717,7 +806,8 @@
     "title": "Línea de borde y arcén",
     "description": "Delimita el borde de la calzada y separa el arcén del espacio de circulación.",
     "source": "Referencia: Manual del Conductor · PDF, página 29",
-    "kind": null
+    "kind": null,
+    "image": "images/signals/manual-094.webp"
   },
   {
     "id": "agent-stop",
@@ -725,7 +815,8 @@
     "title": "Agente: detener la marcha",
     "description": "El agente indica detenerse. Observá la orientación de su cuerpo y sus brazos.",
     "source": "Referencia: Manual del Conductor y material de señales de la Policía Nacional",
-    "kind": "Agente"
+    "kind": "Agente",
+    "image": "images/signals/agent-stop.webp"
   },
   {
     "id": "agent-go",
@@ -765,7 +856,9 @@
     "title": "Luces de un vehículo de emergencia",
     "description": "Las luces de emergencia permiten identificar vehículos de régimen preferente. Facilitá su paso de manera segura.",
     "source": "Referencia: Material de señales de la Policía Nacional · pregunta 18",
-    "kind": "Emergencia"
+    "kind": "Emergencia",
+    "stillImage": "images/signals/emergency-still.webp",
+    "image": "images/signals/emergency.webp"
   },
   {
     "id": "double-yellow",
@@ -773,7 +866,8 @@
     "title": "Doble línea amarilla continua",
     "description": "Separa sentidos opuestos de circulación y señala que no debés cruzarla para adelantar.",
     "source": "Referencia: Material de señales de la Policía Nacional · preguntas 27 y 48",
-    "kind": "Líneas"
+    "kind": "Líneas",
+    "image": "images/signals/double-yellow.webp"
   },
   {
     "id": "broken-yellow",
@@ -781,7 +875,8 @@
     "title": "Línea amarilla discontinua",
     "description": "Separa sentidos opuestos. Solo considerá el adelantamiento cuando esté permitido y existan condiciones seguras.",
     "source": "Referencia: Material de señales de la Policía Nacional · pregunta 49",
-    "kind": "Líneas"
+    "kind": "Líneas",
+    "image": "images/signals/broken-yellow.webp"
   },
   {
     "id": "lane-arrows",
@@ -797,6 +892,7 @@
     "title": "Flecha combinada: frente y giro",
     "description": "Permite continuar de frente o girar según la dirección dibujada en ese carril.",
     "source": "Referencia: Material de señales de la Policía Nacional · pregunta 33",
-    "kind": "Flechas"
+    "kind": "Flechas",
+    "image": "images/signals/combined-arrow.webp"
   }
 ]
