@@ -27,6 +27,8 @@ jobs:
       - name: Instalar dependencias
         run: npm install
       - name: Construir aplicación
+        env:
+          VITE_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
         run: npm run build
       - name: Configurar Pages
         uses: actions/configure-pages@v5

@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import questions from './data/questions.json';
 import LearningPath from './LearningPath';
+import useDriveProgress from './useDriveProgress';
 import HomePage from './HomePage';
 import { createExam } from './examDeck';
 import { criteria, evaluateDevelopment } from './developmentCriteria';
@@ -503,7 +504,7 @@ function ExamSession({ session, minutes, onExit, recordExam }) {
   );
 }
 
-function ProgressView({ progress, onReview, onReset }) {
+function ProgressView({ progress, onReview, onReset, drivePanel }) {
   const accuracy = progress.totalAnswered ? Math.round((progress.totalCorrect / progress.totalAnswered) * 100) : 0;
   const mistakeEntries = Object.entries(progress.mistakes)
     .sort((a, b) => b[1] - a[1])
@@ -516,9 +517,10 @@ function ProgressView({ progress, onReview, onReset }) {
       <div className="workspace-header">
         <span className="eyebrow"><TrendingUp size={16} /> Tu progreso</span>
         <h1>Identificá qué dominás y qué debés repasar</h1>
-        <p>Los datos se almacenan únicamente en este navegador.</p>
+        <p>Tu progreso se guarda en este dispositivo. Conectá Google Drive para llevarlo a otros dispositivos.</p>
       </div>
 
+      {drivePanel}
       <div className="stats-grid">
         <div className="stat-card"><Gauge /><span>Aciertos</span><strong>{accuracy}%</strong></div>
         <div className="stat-card"><CheckCircle2 /><span>Respondidas</span><strong>{progress.totalAnswered}</strong></div>
@@ -588,6 +590,7 @@ export default function App() {
   const [practiceSession, setPracticeSession] = useState(null);
   const [examSession, setExamSession] = useState(null);
   const [progress, setProgress] = useStoredProgress();
+  const drivePanel = useDriveProgress(progress, setProgress);
   const { canInstall, installed, install } = useInstallApp();
 
   const mistakeIds = useMemo(() => Object.keys(progress.mistakes), [progress.mistakes]);
@@ -714,7 +717,7 @@ export default function App() {
     content = <ExamSession key={examSession.map(q=>q.id).join('-')} session={examSession} minutes={EXAM_MINUTES} onExit={() => setView('exam')} recordExam={recordExam} />;
   }
   if (view === 'progress') {
-    content = <ProgressView progress={progress} onReview={() => startPractice('mistakes', true)} onReset={resetProgress} />;
+    content = <ProgressView progress={progress} drivePanel={drivePanel} onReview={() => startPractice('mistakes', true)} onReset={resetProgress} />;
   }
 
   return (

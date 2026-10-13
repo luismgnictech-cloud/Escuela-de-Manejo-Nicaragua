@@ -19,6 +19,7 @@ export function createExam(pool, storage = localStorage, random = Math.random) {
     return {...q,examFormat:'boolean',statement:statement.text,statementCorrect:statement.correct};
   });
   storage.setItem(KEY,JSON.stringify([...used,...picked.map(q=>q.id)]));
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('emn-deck-change'));
   return {questions:formatted,remaining:available.length-EXAM_QUESTIONS};
 }
 export function normalizeAnswer(value) {
