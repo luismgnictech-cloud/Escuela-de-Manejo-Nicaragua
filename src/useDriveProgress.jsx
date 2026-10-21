@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Cloud, LogOut, RefreshCw } from 'lucide-react';
 import { DriveProgress, DRIVE_SCOPE, loadGoogleIdentity, makeBackup, fingerprint, restoreBackup } from './driveProgress';
 import './drive-progress.css';
-const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+// Public OAuth identifier; deployment environments can override it.
+const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '766686827896-n8fr28mhjo0hqvkppffb213sh473o01b.apps.googleusercontent.com';
+const ACCOUNT_SCOPES = ['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile'];
 
 export default function useDriveProgress(progress, setProgress) {
   const [state,setState] = useState({ready:false,busy:false,account:null,message:'',conflict:null,active:false});
@@ -42,11 +44,11 @@ export default function useDriveProgress(progress, setProgress) {
     if (!CLIENT_ID || !state.ready || operation.current) return;
     const run=++generation.current; session.current=null; baseline.current=null; saved.current=null;
     update({busy:true,active:false,account:null,conflict:null,message:'Elegí tu cuenta de Google…'});
-    const client=window.google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:`${DRIVE_SCOPE} openid email profile`,include_granted_scopes:false,
+    const client=window.google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:[DRIVE_SCOPE,...ACCOUNT_SCOPES].join(' '),include_granted_scopes:false,
       error_callback:()=>{if(run===generation.current)update({busy:false,message:'La conexión se canceló o el navegador bloqueó la ventana. Podés intentarlo otra vez.'});},
       callback:async response=>{
         if(run!==generation.current)return;
-        if(response.error || !response.access_token || !window.google.accounts.oauth2.hasGrantedAllScopes(response,DRIVE_SCOPE,'openid','email','profile')) {update({busy:false,message:'Para conectar, autorizá Google Drive y los datos básicos de tu cuenta.'});return;}
+        if(response.error || !response.access_token || !window.google.accounts.oauth2.hasGrantedAllScopes(response,DRIVE_SCOPE,...ACCOUNT_SCOPES)) {update({busy:false,message:'Para conectar, autorizá Google Drive y los datos básicos de tu cuenta.'});return;}
         operation.current=true;
         try {
           const drive=new DriveProgress(response.access_token);
