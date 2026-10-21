@@ -34,3 +34,9 @@ test('save creates an immutable app-only JSON snapshot without writing existing 
 test('Drive errors do not masquerade as a saved copy',async()=>{
  for(const status of [401,403,500]){const d=new DriveProgress('test-token',async()=>new Response('',{status}));await assert.rejects(d.save(backup()));}
 });
+test('default browser fetch retains the global receiver required by native APIs',async()=>{
+ const original=globalThis.fetch;
+ globalThis.fetch=function(){assert.equal(this,globalThis,'native fetch must run with the browser global receiver');return Promise.resolve(new Response('{}'));};
+ try { const drive=new DriveProgress('test-token');await drive.request('https://www.googleapis.com/drive/v3/files'); }
+ finally {globalThis.fetch=original;}
+});

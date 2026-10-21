@@ -32,7 +32,7 @@ export function restoreBackup(backup, setProgress, storage = localStorage) {
   window.dispatchEvent(new Event('emn-deck-change'));
 }
 export class DriveProgress {
-  constructor(token, fetcher = fetch) { this.token = token; this.fetcher = fetcher; }
+  constructor(token, fetcher = globalThis.fetch.bind(globalThis)) { this.token = token; this.fetcher = fetcher; }
   async request(url, options = {}) {
     const response = await this.fetcher(url,{...options,headers:{...options.headers,Authorization:`Bearer ${this.token}`},signal:AbortSignal.timeout(20000)});
     if (!response.ok) {
